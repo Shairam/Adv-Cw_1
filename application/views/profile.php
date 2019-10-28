@@ -87,7 +87,7 @@
             width: 100%;
         }
 
-        .sticky+.content {
+        .sticky+.content {  
             padding-top: 60px;
         }
     </style>
@@ -129,7 +129,7 @@
                             <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"]?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
                             <div class="media-body mb-5 text-white">
                                 <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"]." ". $this->session->userdata('userdata')["lastname"] ?></h4>
-                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php ifecho  "Interested in ".$strGenre ?></p>
+                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in ".$strGenre ?></p>
                             </div>
                         </div>
                     </div>
@@ -158,17 +158,27 @@
                                 </ul>
                             </a>
                             <p>Posted by:- Shairam Sritharan</p>
+                            <hr/>
                         </div>
+
+                        <?php
+                            foreach ($postsData as $postItem){
+                            echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
+                            echo "<a href=#>";
+                            echo "<img src=".base_url("assets/images/home-logo.png")." style=\"margin:inherit\" width=\"200px\" height=\"200px\">";
+                            echo "<p class=\"font-italic mb-0\">". $postItem["description"]."</p>";
+                            echo "</a><hr/>";
+                            echo "</div>";
+                            }
+
+                        ?>
+                      
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
                                 <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
                             </a>
-                            <p>Posted by:- Shairam Sritharan</p>
                         </div>
+
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
                                 <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>

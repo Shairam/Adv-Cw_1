@@ -15,7 +15,9 @@ class Welcome extends CI_Controller
 		// during it's own constructor
 
 		$this->load->model("Genre");
+		$this->load->model("Post");
 		$this->arr["genreList"] = $this->Genre->loadGenres();
+		$this->arr["postsData"] = $this->Post->userPosts();
 	}
 
 	/**

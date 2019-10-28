@@ -70,7 +70,7 @@ class Authentication_controller extends CI_Controller
 			);
 
 			$this->session->set_userdata('userdata', $newdata);
-			$this->load->view("profile");
+			redirect("welcome/");
 		} else {
 			redirect("welcome/");
 		}
