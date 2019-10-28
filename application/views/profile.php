@@ -39,16 +39,16 @@
 *
 */
         body {
-            background: linear-gradient(to right, #f2f2f2, #3AD88D);
+            background: #f2f2f2;
             min-height: 100vh;
             margin: 0;
         }
 
         .header {
-            background: #f2f2f2;
+            background: linear-gradient(to right, #f2f2f2, #3AD88D);
             padding: 10px;
             text-align: center;
-            text:#3AD88D
+            text: #3AD88D
         }
 
         #navbar {
@@ -87,7 +87,7 @@
             width: 100%;
         }
 
-        .sticky+.content {  
+        .sticky+.content {
             padding-top: 60px;
         }
     </style>
@@ -100,36 +100,34 @@
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
                 <h1 class="display-4">SK MusicoBook</h1>
-                <p class="lead mb-0">Best place to meet your  mates</p>
+                <p class="lead mb-0">Best place to meet your mates</p>
                 </p>
             </div>
         </div>
     </div>
-
-
-
 
     <!-- For demo purpose -->
     <!-- End -->
 
     <div class="content">
         <div class="row py-5 px-4">
-            <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">  
+            <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
                 <div id="navbar">
                     <a href="javascript:void(0)">Home</a>
                     <a href="javascript:void(0)">Search</a>
-                    <a class="active"href="javascript:void(0)">Profile</a>
-                    <a href="<?php echo base_url()?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile">Profile</a>
+                    <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
                 </div>
                 <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded ">
                     <div class="px-4 pt-0 pb-4 bg-dark">
                         <div class="media align-items-end profile-header">
-                            <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"]?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
+                            <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
                             <div class="media-body mb-5 text-white">
-                                <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"]." ". $this->session->userdata('userdata')["lastname"] ?></h4>
-                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in ".$strGenre ?></p>
+                                <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></h4>
+                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $strGenre ?></p>
                             </div>
                         </div>
                     </div>
@@ -150,7 +148,7 @@
 
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
-                            <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
+                                <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
                                 <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                 <ul class="list-inline small text-muted mt-3 mb-0">
                                     <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
@@ -158,67 +156,26 @@
                                 </ul>
                             </a>
                             <p>Posted by:- Shairam Sritharan</p>
-                            <hr/>
+                            <hr />
                         </div>
 
                         <?php
-                            foreach ($postsData as $postItem){
+                        foreach ($postsData as $postItem) {
+
                             echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
-                            echo "<a href=#>";
-                            echo "<img src=".base_url("assets/images/home-logo.png")." style=\"margin:inherit\" width=\"200px\" height=\"200px\">";
-                            echo "<p class=\"font-italic mb-0\">". $postItem["description"]."</p>";
-                            echo "</a><hr/>";
+                            echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"200px\" height=\"200px\"><br/>";
+                            echo "<h3>".$postItem["title"]."</h3>";
+                            echo "<p class=\"font-italic mb-0\">" .  replaceLinks($postItem["description"]) . "</p>";
+                            echo "<hr/>";
                             echo "</div>";
-                            }
+                        }
+
+                        function replaceLinks($text)
+                        {
+                            echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
+                        }
 
                         ?>
-                      
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                            </a>
-                        </div>
-
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                        </div>
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                        </div>
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                        </div>
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -227,7 +184,6 @@
     </div>
 
     <script>
-        
         window.onscroll = function() {
             myFunction()
         };
@@ -239,13 +195,13 @@
 
         function myFunction() {
             if (window.pageYOffset >= sticky) {
-                
+
             } else {
                 navbar.classList.remove("sticky");
             }
         }
     </script>
-</div>
+    </div>
 </body>
 
 </html>

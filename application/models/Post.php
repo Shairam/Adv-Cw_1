@@ -13,9 +13,21 @@ class Post extends CI_Model
         $this->load->database();
     }
 
-    public function userPosts(){
+    public function userPosts()
+    {
         $username = $this->session->userdata('userdata')["username"];
         $query = $this->db->get_where("Posts", array('createdBy' => $username));
         return $query->result_array();
+    }
+
+    public function createNewPost($title, $description)
+    {
+        $data = array(
+            'createdBy' => $this->session->userdata("userdata")["username"],
+            'createdOn' => date("Y.m.d"),
+            'description' => $description,
+            'title' => $title
+        );
+        $this->db->insert('Posts', $data);
     }
 }

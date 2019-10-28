@@ -13,11 +13,10 @@ class Welcome extends CI_Controller
 		parent::__construct();
 		// placing it here should work as the parent class has added that property
 		// during it's own constructor
-
+		date_default_timezone_set('Europe/London');
 		$this->load->model("Genre");
 		$this->load->model("Post");
 		$this->arr["genreList"] = $this->Genre->loadGenres();
-		$this->arr["postsData"] = $this->Post->userPosts();
 	}
 
 	/**
@@ -38,10 +37,11 @@ class Welcome extends CI_Controller
 	public function index()
 	{
 		if (!$this->session->userdata('userdata')) {
-			$this->load->view('welcome_message',$this->arr);
+			$this->load->view('welcome_message', $this->arr);
 		} else {
-			$this->arr["strGenre"] = $this->getUserGenres();
-			$this->load->view('profile',$this->arr);
+			$this->arr["genreList"] = $this->Genre->loadGenres();
+			$this->arr["postsData"] = $this->Post->userPosts();
+			$this->loadProfile();
 		}
 	}
 
@@ -53,13 +53,34 @@ class Welcome extends CI_Controller
 		$result = $this->load->model("Authentication");
 	}
 
-	public function getUserGenres(){
+	public function getUserGenres()
+	{
 		$strGenre = [];
-		foreach($this->arr["genreList"] as $genreItem ){
-			if(in_array($genreItem["genre_id"], $this->Genre->loadUserGenres())){
-				$strGenre[ ]= $genreItem["name"];
-			}	
+		foreach ($this->arr["genreList"] as $genreItem) {
+			if (in_array($genreItem["genre_id"], $this->Genre->loadUserGenres())) {
+				$strGenre[] = $genreItem["name"];
+			}
 		}
 		return implode(', ', $strGenre);
+	}
+
+	public function loadPostView()
+	{
+		$this->load->view("create_post");
+	}
+
+	public function loadProfile()
+	{
+		$this->arr["strGenre"] = $this->getUserGenres();
+		$this->arr["postsData"] = $this->Post->userPosts();
+		$this->load->view("profile", $this->arr);
+	}
+
+	public function createPost()
+	{
+		$title = $this->input->post("title");
+		$description = $this->input->post("description");
+		$this->Post->createNewPost($title,$description);
+		redirect("/welcome");
 	}
 }
