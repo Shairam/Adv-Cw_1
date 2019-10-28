@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>Home Page</title>
+    <title>Create a New Post</title>
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->

@@ -83,4 +83,12 @@ class Welcome extends CI_Controller
 		$this->Post->createNewPost($title,$description);
 		redirect("/welcome");
 	}
+
+	public function testView(){
+		$this->load->view("search_people",$this->arr);
+	}
+
+	public function testSearch(){
+		var_dump($this->input->post("genreSearchList"));
+	}
 }
