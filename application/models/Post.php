@@ -16,6 +16,7 @@ class Post extends CI_Model
     public function userPosts()
     {
         $username = $this->session->userdata('userdata')["username"];
+        $this->db->order_by("createdOn", "desc");
         $query = $this->db->get_where("Posts", array('createdBy' => $username));
         return $query->result_array();
     }
@@ -29,5 +30,15 @@ class Post extends CI_Model
             'title' => $title
         );
         $this->db->insert('Posts', $data);
+    }
+
+    public function loadHomePosts(){
+        $this->db->select('Follows.follower, Posts.*');
+    $this->db->from('Posts');
+    $this->db->join('Follows', 'Posts.createdBy = Follows.follower', 'inner'); 
+    $this->db->where('Follows.followee',$this->session->userdata("userdata")["username"]);
+    $this->db->order_by("createdOn", "desc");
+    $query = $this->db->get_where();
+    return $query->result_array();
     }
 }

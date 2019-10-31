@@ -121,41 +121,19 @@
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
                 <div id="navbar">
-                    <a href="javascript:void(0)">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView"">Search</a>
-                    <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a> 
+                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Home</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
+                    <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/loadProfile">Profile</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
                 </div>
                 <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded ">
-                    <div class="px-4 pt-0 pb-4 bg-dark">
-                        <div class="media align-items-end profile-header">
-                            <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
-                            <div class="media-body mb-5 text-white">
-                                <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></h4>
-                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $strGenre ?></p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="bg-light p-4 d-flex justify-content-end text-center">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block"><?php echo count($postsData); ?></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
-                            </li>
-                            <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block">0</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
-                            </li>
-                            <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block">0</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Following</small>
-                            </li>
-                        </ul>
-                    </div>
 
                     <div class="py-4">
-                        <h5 class="mb-3" style="text-align:center">Recent posts</h5>
+                        <h5 class="mb-3 headTitle" style="text-align:center">Recent posts</h5>
 
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
@@ -171,22 +149,7 @@
                         </div>
 
                         <?php
-                        foreach ($postsData as $postItem) {
-
-                            echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
-                            echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"200px\" height=\"200px\"><br/>";
-                            echo "<h3>" . $postItem["title"] . "</h3>";
-                            echo "<p class=\"font-italic mb-0\">" .  replaceLinks($postItem["description"]) . "</p>";
-                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>".$postItem["createdOn"]."</li>";
-                            echo "</hr>";
-                            echo "<hr/>";
-                            echo "</div>";
-                        }
-
-                        function replaceLinks($text)
-                        {
-                            echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
-                        }
+                        echo "test"
 
                         ?>
                     </div>

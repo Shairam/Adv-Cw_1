@@ -80,15 +80,25 @@ class Welcome extends CI_Controller
 	{
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
-		$this->Post->createNewPost($title,$description);
-		redirect("/welcome");
+		$this->Post->createNewPost($title, $description);
+		echo "<script>
+				alert('Post created successfully');
+				window.location.href='/test-1';
+			</script>";
 	}
 
-	public function testView(){
-		$this->load->view("search_people",$this->arr);
+	public function testView()
+	{
+		var_dump($this->Post->loadHomePosts());
 	}
 
-	public function testSearch(){
-		var_dump($this->input->post("genreSearchList"));
+	public function testSearch()
+	{
+		$external_link = "https://photo-1499018658500-b21c72d7172b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
+		if (@getimagesize($external_link)) {
+			echo  "image exists ";
+		} else {
+			echo  "image does not exist ";
+		}
 	}
 }
