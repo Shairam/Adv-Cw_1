@@ -17,6 +17,7 @@ class Welcome extends CI_Controller
 		$this->load->model("Genre");
 		$this->load->model("Post");
 		$this->arr["genreList"] = $this->Genre->loadGenres();
+		$this->arr["allPosts"] = $this->Post->loadHomePosts();
 	}
 
 	/**
@@ -41,7 +42,7 @@ class Welcome extends CI_Controller
 		} else {
 			$this->arr["genreList"] = $this->Genre->loadGenres();
 			$this->arr["postsData"] = $this->Post->userPosts();
-			$this->loadProfile();
+			$this->loadHomeView();
 		}
 	}
 
@@ -87,9 +88,10 @@ class Welcome extends CI_Controller
 			</script>";
 	}
 
-	public function testView()
+	public function loadHomeView()
 	{
-		var_dump($this->Post->loadHomePosts());
+		//var_dump($this->Post->loadHomePosts());
+		$this->load->view("home",  $this->arr);
 	}
 
 	public function testSearch()

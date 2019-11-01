@@ -33,10 +33,10 @@ class Post extends CI_Model
     }
 
     public function loadHomePosts(){
-        $this->db->select('Follows.follower, Posts.*');
+        $this->db->select('Follows.followed_user, Posts.*');
     $this->db->from('Posts');
-    $this->db->join('Follows', 'Posts.createdBy = Follows.follower', 'inner'); 
-    $this->db->where('Follows.followee',$this->session->userdata("userdata")["username"]);
+    $this->db->join('Follows', 'Posts.createdBy = Follows.followed_user', 'inner'); 
+    $this->db->where('Follows.followed_by',$this->session->userdata("userdata")["username"]);
     $this->db->order_by("createdOn", "desc");
     $query = $this->db->get_where();
     return $query->result_array();

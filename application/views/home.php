@@ -149,7 +149,24 @@
                         </div>
 
                         <?php
-                        echo "test"
+                        foreach ($allPosts as $postItem) {
+
+                            echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
+                            echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                            echo "<span><h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4></span>";
+                            echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"200px\" height=\"200px\"><br/>";
+                            echo "<h5>" . $postItem["title"] . "</h5>";
+                            echo "<p class=\"font-italic mb-0\">" .  replaceLinks($postItem["description"]) . "</p>";
+                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>".$postItem["createdOn"]."</li>";
+                            echo "</hr>";
+                            echo "<hr/>";
+                            echo "</div>";
+                        }
+
+                        function replaceLinks($text)
+                        {
+                            echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
+                        }
 
                         ?>
                     </div>

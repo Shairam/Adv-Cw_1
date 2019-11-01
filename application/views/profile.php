@@ -121,8 +121,8 @@
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
                 <div id="navbar">
-                    <a href="javascript:void(0)">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView"">Search</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/loadHomeView">Home</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a> 
                     <a href="<?php echo base_url() ?>index.php/welcome/loadProfile">Profile</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
@@ -175,7 +175,7 @@
 
                             echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
                             echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"200px\" height=\"200px\"><br/>";
-                            echo "<h3>" . $postItem["title"] . "</h3>";
+                            echo "<h5>" . $postItem["title"] . "</h5>";
                             echo "<p class=\"font-italic mb-0\">" .  replaceLinks($postItem["description"]) . "</p>";
                             echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>".$postItem["createdOn"]."</li>";
                             echo "</hr>";
