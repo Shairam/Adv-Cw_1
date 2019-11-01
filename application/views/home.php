@@ -98,6 +98,10 @@
         .headTitle {
             font-family: 'Sofia';
         }
+
+        .round-img {
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -121,11 +125,13 @@
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
                 <div id="navbar">
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Home</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile">Profile</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                        <?php echo $this->session->userdata('userdata')["username"] ?>
+                    </a>
                 </div>
                 <!-- Profile widget -->
 
@@ -152,12 +158,12 @@
                         foreach ($allPosts as $postItem) {
 
                             echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
-                            echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                            echo "<img class=\"round-img\" src=" . $postItem["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
                             echo "<span><h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4></span>";
                             echo "<img src=" . base_url("assets/images/home-logo.png") . " style=\"margin:inherit\" width=\"200px\" height=\"200px\"><br/>";
                             echo "<h5>" . $postItem["title"] . "</h5>";
                             echo "<p class=\"font-italic mb-0\">" .  replaceLinks($postItem["description"]) . "</p>";
-                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>".$postItem["createdOn"]."</li>";
+                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>" . $postItem["createdOn"] . "</li>";
                             echo "</hr>";
                             echo "<hr/>";
                             echo "</div>";

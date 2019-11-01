@@ -42,10 +42,12 @@ class Welcome extends CI_Controller
 		} else {
 			$this->arr["genreList"] = $this->Genre->loadGenres();
 			$this->arr["postsData"] = $this->Post->userPosts();
-			$this->loadHomeView();
+			$this->loadAllPosts();
 		}
-	}
 
+		//$this->Post->testHomePosts();
+	}
+	
 	public function validateLogin()
 	{
 		$username = $this->input->post("username");
@@ -88,7 +90,7 @@ class Welcome extends CI_Controller
 			</script>";
 	}
 
-	public function loadHomeView()
+	public function loadAllPosts()
 	{
 		//var_dump($this->Post->loadHomePosts());
 		$this->load->view("home",  $this->arr);
@@ -103,4 +105,5 @@ class Welcome extends CI_Controller
 			echo  "image does not exist ";
 		}
 	}
+
 }
