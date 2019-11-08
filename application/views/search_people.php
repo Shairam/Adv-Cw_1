@@ -151,6 +151,17 @@
         .card-img-top {
             height: 180px;
         }
+
+        .blink_me {
+            animation: blinker 1s linear infinite;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -201,14 +212,14 @@
                             </div>
 
                         </div>
-                        <input type="submit" class="btn btn-outline-success btn-rounded waves-effect" value="Search">
+                        <input type="submit" class="btn btn-outline-success btn-rounded waves-effect blink_me" value="Search">
                     </form>
                     <div class="FixedHeightContainer">
-                    <?php
-                                if (isset($userGenres)){
-                                  echo " <h2>".count($userGenres)." Users Found</h2></br>";
-                                 }
-                                ?>
+                        <?php
+                        if (isset($userGenres)) {
+                            echo " <h2>" . count($userGenres) . " Users Found</h2></br>";
+                        }
+                        ?>
                         <div class="Content" style="padding:20px">
                             <div class="card-deck">
                                 <?php

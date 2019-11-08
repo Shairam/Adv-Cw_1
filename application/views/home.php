@@ -15,17 +15,10 @@
     <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
     <!--Custom styles-->
     <style>
-        /* Made with love by Mutiullah Samim*/
+       
 
         @import url('https://fonts.googleapis.com/css?family=Numans');
 
-        /*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
         .profile-header {
             transform: translateY(5rem);
         }
@@ -95,7 +88,7 @@
             padding-top: 60px;
         }
 
-        .headTitle {
+        .font-sh-1 {
             font-family: 'Sofia';
         }
 
@@ -111,7 +104,7 @@
         <div class="row">
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
-                <h1 class="display-4 headTitle">SK MusicoBook</h1>
+                <h1 class="display-4 font-sh-1">SK MusicoBook</h1>
                 <p class="lead mb-0">Best place to meet your mates</p>
                 </p>
             </div>
@@ -139,7 +132,7 @@
 
 
                     <div class="py-4">
-                        <h5 class="mb-3 headTitle" style="text-align:center">Recent posts</h5>
+                        <h5 class="mb-3 font-sh-1" style="text-align:center">Recent posts</h5>
 
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
