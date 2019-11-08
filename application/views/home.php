@@ -126,7 +126,7 @@
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
                 <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">

@@ -49,4 +49,13 @@ class User extends CI_Model
             return null;
         }
     }
+
+    function filterUsers($genreId){
+        $this->db->select('Users.*');
+        $this->db->from('Users');
+        $this->db->join('Genre_Bridge', 'Users.username = Genre_Bridge.username', 'inner'); 
+        $this->db->where('Genre_Bridge.genre_id =',$genreId);
+        $query = $this->db->get_where();
+        return $query->result_array();
+    }
 }

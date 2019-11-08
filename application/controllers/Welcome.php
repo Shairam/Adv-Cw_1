@@ -15,7 +15,9 @@ class Welcome extends CI_Controller
 		// during it's own constructor
 		date_default_timezone_set('Europe/London');
 		$this->load->model("Genre");
+		$this->load->model("Followings");
 		$this->load->model("Post");
+		$this->load->model("User");
 		$this->arr["genreList"] = $this->Genre->loadGenres();
 		$this->arr["allPosts"] = $this->Post->loadHomePosts();
 	}
@@ -44,8 +46,6 @@ class Welcome extends CI_Controller
 			$this->arr["postsData"] = $this->Post->userPosts();
 			$this->loadAllPosts();
 		}
-
-		//$this->Post->testHomePosts();
 	}
 	
 	public function validateLogin()
@@ -76,6 +76,7 @@ class Welcome extends CI_Controller
 	{
 		$this->arr["strGenre"] = $this->getUserGenres();
 		$this->arr["postsData"] = $this->Post->userPosts();
+		$this->arr["followDetails"] = $this->Followings->getFollowCounts();
 		$this->load->view("profile", $this->arr);
 	}
 
@@ -98,12 +99,14 @@ class Welcome extends CI_Controller
 
 	public function testSearch()
 	{
-		$external_link = "https://photo-1499018658500-b21c72d7172b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
-		if (@getimagesize($external_link)) {
-			echo  "image exists ";
-		} else {
-			echo  "image does not exist ";
-		}
+		$id = $this->input->get("list");
+		$this->arr["userGenres"] = $this->User->filterUsers($id);
+		$this->load->view("search_people",$this->arr);
+	}
+
+	public function displaySearch(){
+		 //$this->Post->testHomePosts();
+		 $this->load->view("search_people",$this->arr);
 	}
 
 }

@@ -124,6 +124,33 @@
         #checkboxes label:hover {
             background-color: #1e90ff;
         }
+
+        .round-img {
+            border-radius: 50%;
+        }
+
+        .FixedHeightContainer {
+
+            height: 45600px0px;
+            width: 800px;
+            padding: 3px;
+
+        }
+
+        .Content {
+            height: 600px;
+            overflow: auto;
+            background: #fff;
+        }
+
+        .card {
+            min-width: 200px;
+            max-width: 200px;
+        }
+
+        .card-img-top {
+            height: 180px;
+        }
     </style>
 </head>
 
@@ -146,9 +173,9 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-            <div id="navbar">
+                <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
@@ -158,65 +185,53 @@
                 <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded py-5 px-4">
-                    <form class="form-inline md-form mr-auto mb-4" action="<?php echo site_url() ?>/welcome/testSearch" method="post">
+                    <form class="form-inline md-form mr-auto mb-4" action="<?php echo site_url() ?>/welcome/testSearch" method="get">
                         <div class="input-group form-group">
                             <div class="multiselect">
                                 <div class="selectBox" onclick="showCheckboxes()" style="padding:10px">
-                                    <select>
-                                        <option>Search By Genres</option>
-                                    </select>
-                                    <div class="overSelect"></div>
-                                </div>
-                                <div id="checkboxes" class="genre-content">
-                                    <?php
-                                    foreach ($genreList as $row) {
-                                        echo "<label>
-									<input type=\"checkbox\"  name=\"genreSearchList[]\" value=" . $row["genre_id"] . ">" . $row["name"] . "</label>";
-                                    }
-                                    ?>
+                                    <select name="list">
+                                        <option value=''>Search by Genres</option>
+                                        <?php
+                                        foreach ($genreList as $genreItem)
+                                            echo "<option value='$genreItem[genre_id]'>$genreItem[name]</option>";
 
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
 
                         </div>
                         <input type="submit" class="btn btn-outline-success btn-rounded waves-effect" value="Search">
                     </form>
-                    <div class="card-deck">
-                        <div class="card">
-                            <img class="card-img-top" src="https://avatars3.githubusercontent.com/u/32301407?s=460&v=4" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="https://avatars3.githubusercontent.com/u/32301407?s=460&v=4" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="https://avatars3.githubusercontent.com/u/32301407?s=460&v=4" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
+                    <div class="FixedHeightContainer">
+                    <?php
+                                if (isset($userGenres)){
+                                  echo " <h2>".count($userGenres)." Users Found</h2></br>";
+                                 }
+                                ?>
+                        <div class="Content" style="padding:20px">
+                            <div class="card-deck">
+                                <?php
+                                if (isset($userGenres)) {
+                                    foreach ($userGenres as $user) {
+                                        echo "<div class=\"card\">";
+                                        echo "<img class=\"card-img-top\" src=" . $user["imageURL"] . " alt=\"Card image cap\">";
+                                        echo " <div class=\"card-body\">
+                                            <h5 class=\"card-title\">" . $user["username"] . "</h5>
+                                            <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        </div></div>";
+                                    }
+                                } else {
+                                    echo "<h5>Please Search from the above Options<h5/>";
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-
     </div><!-- End profile widget -->
 
     </div>

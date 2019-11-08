@@ -125,7 +125,7 @@
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
             <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/testView">Search</a>
+                    <a href="<?php echo base_url() ?>index.php/welcome/ ">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
@@ -151,10 +151,10 @@
                                 <h5 class="font-weight-bold mb-0 d-block"><?php echo count($postsData); ?></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
                             </li>
                             <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block">0</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $followDetails["Followers"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
                             </li>
                             <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block">0</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Following</small>
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $followDetails["Following"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Following</small>
                             </li>
                         </ul>
                     </div>
