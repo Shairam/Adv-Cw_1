@@ -8,11 +8,9 @@ class Authentication_controller extends CI_Controller
 
 	public function __construct()
 	{
-		// placing it here fails: $this has no `load` property yet.
-		// $this->load->database(); <!-- NO WAY JOSÉ!
-		parent::__construct();
 		// placing it here should work as the parent class has added that property
 		// during it's own constructor
+		parent::__construct(); 
 		$this->load->database();
 		$this->load->model("User");
 		$this->load->model("Genre");
@@ -36,26 +34,43 @@ class Authentication_controller extends CI_Controller
 
 	public function registerUser()
 	{
+
+		
+		if(!$this->User->testImagesView("imgURL")){
+			echo "<script>
+			alert('Invalid URL');
+			window.location.href=\"".$this->config->item('application_url')."\"
+				</script>";
+				return;
+		}
+
 		$result = $this->User->createUser(
 			$this->input->post("username"),
 			$this->input->post("password"),
-			$this->input->post("email"),
 			$this->input->post("fname"),
 			$this->input->post("lname"),
+			$this->input->post("dob"),
+			$this->input->post("email"),
 			$this->input->post("imgURL"),
 			$this->input->post("genres")
 		);
 
 		if ($result === 1062) {
+			echo "<script>
+			alert('User with that name already exists!!! Try again');
+			window.location.href=".$this->config->item('application_url')."
+			</script>";
 			$arr = $this->Genre->loadGenres();
 			$this->load->view("welcome_message", $arr);
 		} else {
-			redirect("welcome/");
+			redirect($this->config->item('entry_point'));
 		}
 	}
 
 	public function signInUser()
 	{
+	
+		log_message('debug', 'Password given- ' . $this->input->post("password"));
 		$userData = $this->User->validateSignIn($this->input->post("username"), $this->input->post("password"));
 		if (isset($userData)) {
 
@@ -70,15 +85,18 @@ class Authentication_controller extends CI_Controller
 			);
 
 			$this->session->set_userdata('userdata', $newdata);
-			redirect("welcome/");
+			redirect($this->config->item('entry_point'));
 		} else {
-			redirect("welcome/");
+			echo "<script>
+			alert('Username or Password is wrong!!! Try again');
+			window.location.href=\"".$this->config->item('application_url')."\"
+				</script>";
 		}
 	}
 
 	public function logoutuser()
 	{
 		$this->session->sess_destroy();
-		redirect("welcome/");
+		redirect($this->config->item('entry_point'));
 	}
 }

@@ -29,10 +29,9 @@ class Genre extends CI_Model
         }
     }
 
-    public function loadUserGenres()
+    public function loadUserGenres($username)
     {   $dataArr =array();
         if ($this->session->userdata('userdata')) {
-            $username = $this->session->userdata('userdata')["username"];
             $query = $this->db->get_where('Genre_Bridge', array('username' => $username));
             foreach ($query->result_array() as $item){
                     $dataArr[] = $item["genre_id"];
@@ -42,4 +41,17 @@ class Genre extends CI_Model
             redirect("welcome/");
         }
     }
+
+    public function getUserGenres($username)
+	{
+        $strGenre = [];
+        $genreLists = $this->loadGenres();
+		foreach ($genreLists as $genreItem) {
+			$memberGenre =  $this->loadUserGenres($username);
+			if (in_array($genreItem["genre_id"],$memberGenre)) {
+				$strGenre[] = $genreItem["name"];
+			}
+		}
+		return implode(', ', $strGenre);
+	}
 }

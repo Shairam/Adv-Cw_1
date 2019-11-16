@@ -18,7 +18,7 @@
         /* Made with love by Mutiullah Samim*/
 
         @import url('https://fonts.googleapis.com/css?family=Numans');
-        
+
         .profile-header {
             transform: translateY(5rem);
         }
@@ -83,9 +83,11 @@
         .sticky+.content {
             padding-top: 60px;
         }
+
         .round-img {
             border-radius: 50%;
         }
+
         .font-sh-1 {
             font-family: 'Sofia';
         }
@@ -111,7 +113,7 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-            <div id="navbar">
+                <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
@@ -122,50 +124,73 @@
                 </div>
                 <!-- Profile widget -->
                 <div class="container">
-	<div class="row">
-	    
-	    <div class="col-md-8 col-md-offset-2">
-	        
-    		<h1>Create post</h1>
-    		
-    		<form action="<?php echo base_url() ?>index.php/Welcome/createPost" method="POST">
-    		    
-    		    <div class="form-group">
-    		        <label for="title">Title <span class="require">*</span></label>
-    		        <input type="text" class="form-control" name="title" autocomplete="off" required/>
-    		    </div>
-    		    
-    		    <div class="form-group">
-    		        <label for="description">Description <span class="require">*</span></label>
-                    <textarea rows="4" cols="50" name="description" required>
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2">
+
+                            <h1>Create post</h1>
+
+                            <form action="<?php echo base_url() ?>index.php/Welcome/createPost" method="POST">
+
+                                <div class="form-group">
+                                    <label for="title">Title <span class="require">*</span></label>
+                                    <input type="text" class="form-control" name="title" autocomplete="off" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description <span class="require">*</span></label>
+                                    <textarea rows="4" cols="50" name="description" required>
                     </textarea>
-    		    </div>
-    		    
-    		    <div class="form-group">
-    		        <p><span class="require">*</span> - required fields</p>
-    		    </div>
-    		    
-    		    <div class="form-group">
-    		        <button type="submit" class="btn btn-primary">
-    		            Create
-    		        </button>
-    		        <button class="btn btn-default">
-    		            Back
-    		        </button>
-    		    </div>
-    		    
-    		</form>
-		</div>
-		
-	</div>
-</div>
-           
+                                </div>
+
+                                <div class="form-group" id="image-div">
+                                    <div id="dynamicInput[0]">
+                                        Upload images here (urls:- )<br><input type="text" name="myInputs[]">
+                                        <input type="button" value="+" onClick="addInput();">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <p><span class="require">*</span> - required fields</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">
+                                        Create
+                                    </button>
+                                    <button class="btn btn-default">
+                                        Back
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div><!-- End profile widget -->
 
     </div>
 
     <script>
+        var counter = 1;
+        var dynamicInput = [];
+
+        function addInput() {
+           // alert("His");
+            var newdiv = document.createElement('div');
+            newdiv.id = dynamicInput[counter];
+            newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
+            document.getElementById('image-div').appendChild(newdiv);
+            counter++;
+        }
+
+        function removeInput(id) {
+            var elem = document.getElementById(id);
+            return elem.parentNode.removeChild(elem);
+        }
         window.onscroll = function() {
             myFunction()
         };

@@ -13,38 +13,70 @@ class Post extends CI_Model
         $this->load->database();
     }
 
-    public function userPosts()
+    public function userPosts($username)
     {
-        $username = $this->session->userdata('userdata')["username"];
+
         $this->db->order_by("createdOn", "desc");
         $query = $this->db->get_where("Posts", array('createdBy' => $username));
-        return $query->result_array();
+        $resultArr =  $query->result_array();
+        if ($resultArr) {
+            foreach ($resultArr as &$postItem) {
+                $query = $this->db->get_where("Post_Images", array('postId' => $postItem["postId"]));
+                $postItem["ImageLists"] = $query->result_array();
+            }
+        }
+        return $resultArr;
     }
 
-    public function createNewPost($title, $description)
+    public function createNewPost($title, $description, $imageArr)
     {
+        $date = date('Y-m-d H:i:s');
         $data = array(
             'createdBy' => $this->session->userdata("userdata")["username"],
-            'createdOn' => date("Y.m.d"),
+            'createdOn' => $date,
             'description' => $description,
             'title' => $title
         );
         $this->db->insert('Posts', $data);
+        $id = $this->db->insert_id();
+
+        if (isset($imageArr)) {
+            $this->insertPostImages($id, $imageArr);
+        }
     }
 
-    public function loadHomePosts(){
-        $this->db->select('Follows.followed_user, Posts.*,Users.imageURL');
-    $this->db->from('Posts');
-    $this->db->join('Follows', 'Posts.createdBy = Follows.followed_user', 'inner'); 
-    $this->db->join('Users', 'Follows.followed_user = Users.username', 'inner');
-    $this->db->where('Follows.followed_by',$this->session->userdata("userdata")["username"]);
-    $this->db->order_by("createdOn", "desc");
-    $query = $this->db->get_where();
-    $result = $this->db->query("(SELECT Posts.*, Users.imageURL FROM Posts INNER JOIN
-    Follows on Posts.createdBy = Follows.followed_user INNER JOIN Users on Follows.followed_user = Users.username WHERE Follows.followed_by =\"".$this->session->userdata("userdata")["username"]."\")
+    public function loadPostImages($post_id)
+    {
+        $query = $this->db->get_where("Post_Images", array('postId' => $post_id));
+        return $query->result_array();
+    }
+
+    public function loadHomePosts()
+    {
+
+        $result = $this->db->query("(SELECT Posts.*, Users.imageURL FROM Posts INNER JOIN
+    Follows on Posts.createdBy = Follows.followed_user INNER JOIN Users on Follows.followed_user = Users.username WHERE Follows.followed_by =\"" . $this->session->userdata("userdata")["username"] . "\")
      UNION 
-     (SELECT Posts.*,  Users.imageURL FROM Posts INNER JOIN Users on Posts.createdBy = Users.username WHERE Users.username = \"".$this->session->userdata("userdata")["username"]."\") ORDER BY `createdOn` DESC
+     (SELECT Posts.*,  Users.imageURL FROM Posts INNER JOIN Users on Posts.createdBy = Users.username WHERE Users.username = \"" . $this->session->userdata("userdata")["username"] . "\") ORDER BY `createdOn` DESC
         ");
-    return $result->result_array();
+        $resultArr = $result->result_array();
+        if ($resultArr) {
+            foreach ($resultArr as &$postItem) {
+                $query = $this->db->get_where("Post_Images", array('postId' => $postItem["postId"]));
+                $postItem["ImageLists"] = $query->result_array();
+            }
+        }
+        return $resultArr;
+    }
+
+    public function insertPostImages($post_id, $imageArr)
+    {
+        foreach ($imageArr as $imageURL) {
+            $data = array(
+                'postId' => $post_id,
+                'imageURL' => $imageURL
+            );
+            $this->db->insert('Post_Images', $data);
+        }
     }
 }

@@ -18,6 +18,7 @@ class Welcome extends CI_Controller
 		$this->load->model("Followings");
 		$this->load->model("Post");
 		$this->load->model("User");
+		$this->load->library('user_agent');
 		$this->arr["genreList"] = $this->Genre->loadGenres();
 		$this->arr["allPosts"] = $this->Post->loadHomePosts();
 	}
@@ -43,11 +44,11 @@ class Welcome extends CI_Controller
 			$this->load->view('welcome_message', $this->arr);
 		} else {
 			$this->arr["genreList"] = $this->Genre->loadGenres();
-			$this->arr["postsData"] = $this->Post->userPosts();
+			$this->arr["postsData"] = $this->Post->userPosts($this->session->userdata('userdata')["username"]);
 			$this->loadAllPosts();
 		}
 	}
-	
+
 	public function validateLogin()
 	{
 		$username = $this->input->post("username");
@@ -56,16 +57,6 @@ class Welcome extends CI_Controller
 		$result = $this->load->model("Authentication");
 	}
 
-	public function getUserGenres()
-	{
-		$strGenre = [];
-		foreach ($this->arr["genreList"] as $genreItem) {
-			if (in_array($genreItem["genre_id"], $this->Genre->loadUserGenres())) {
-				$strGenre[] = $genreItem["name"];
-			}
-		}
-		return implode(', ', $strGenre);
-	}
 
 	public function loadPostView()
 	{
@@ -74,21 +65,37 @@ class Welcome extends CI_Controller
 
 	public function loadProfile()
 	{
-		$this->arr["strGenre"] = $this->getUserGenres();
-		$this->arr["postsData"] = $this->Post->userPosts();
-		$this->arr["followDetails"] = $this->Followings->getFollowCounts();
+		$this->arr["strGenre"] = $this->Genre->getUserGenres($this->session->userdata('userdata')["username"]);
+		$this->arr["postsData"] = $this->Post->userPosts($this->session->userdata('userdata')["username"]);
+		$this->arr["followDetails"] = $this->Followings->getFollowCounts($this->session->userdata('userdata')["username"]);
 		$this->load->view("profile", $this->arr);
 	}
 
 	public function createPost()
 	{
+
+		$imageArr = $this->User->testImagesView("myInputs");
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
-		$this->Post->createNewPost($title, $description);
-		echo "<script>
-				alert('Post created successfully');
-				window.location.href='/test-1';
-			</script>";
+		if ($imageArr == null) {
+			echo "<script>
+					alert('Please Check your uploading images URL');
+					window.location.href=\"" . base_url("index.php/welcome/loadPostView") . "\";
+				</script>";
+			
+		} else if ($imageArr[0] == "") { 
+			$this->Post->createNewPost($title, $description, null);
+			echo "<script>
+					alert('Post created successfully');
+					window.location.href=\"" . base_url() . "\";
+				</script>";
+		} else {
+			$this->Post->createNewPost($title, $description, $imageArr);
+			echo "<script>
+					alert('Post created successfully');
+					window.location.href=\"" . base_url() . "\";
+				</script>";
+		}
 	}
 
 	public function loadAllPosts()
@@ -99,14 +106,29 @@ class Welcome extends CI_Controller
 
 	public function testSearch()
 	{
-		$id = $this->input->get("list");
-		$this->arr["userGenres"] = $this->User->filterUsers($id);
-		$this->load->view("search_people",$this->arr);
+		if($this->input->get("genreId")){
+			$this->retrieveLoadSearchData($this->input->get("genreId"));
+		}
+		else {
+			$this->retrieveLoadSearchData($this->uri->segment(3));
+		}
 	}
 
-	public function displaySearch(){
-		 //$this->Post->testHomePosts();
-		 $this->load->view("search_people",$this->arr);
+	public function displaySearch()
+	{
+		//$this->Post->testHomePosts();
+		$this->load->view("search_people", $this->arr);
 	}
 
+	public function retrieveLoadSearchData($genre_id){
+		$this->arr["userGenres"] = $this->User->filterUsers($genre_id);
+		if($this->arr["userGenres"]){
+			foreach($this->arr["userGenres"] as &$user){
+				$isFollowed = $this->User->checkFollow($user["username"], $this->session->userdata('userdata')["username"]);
+				$user["isFollowed"] = $isFollowed; 
+			}
+		}
+		$this->arr["genreId"] = $genre_id;
+		$this->load->view("search_people", $this->arr);
+	}
 }

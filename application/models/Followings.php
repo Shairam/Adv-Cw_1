@@ -13,9 +13,8 @@ class Followings extends CI_Model
         $this->load->database();
     }
 
-    public function getFollowCounts()
+    public function getFollowCounts($username)
     {
-        $username = $this->session->userdata('userdata')["username"];
         $result = $this->db->query("SELECT (SELECT COUNT(*) FROM Follows WHERE followed_by = \"".$username."\") AS Following, (SELECT COUNT(*) FROM Follows WHERE followed_user = \"".$username."\") AS Followers");
         return $result->row_array();
     }

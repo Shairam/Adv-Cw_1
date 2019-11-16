@@ -91,6 +91,14 @@
             padding-top: 60px;
         }
 
+        .headTitle {
+            font-family: 'Sofia';
+        }
+
+        .round-img {
+            border-radius: 50%;
+        }
+
         .multiselect {
             width: 200px;
         }
@@ -200,7 +208,7 @@
                         <div class="input-group form-group">
                             <div class="multiselect">
                                 <div class="selectBox" onclick="showCheckboxes()" style="padding:10px">
-                                    <select name="list">
+                                    <select name="genreId">
                                         <option value=''>Search by Genres</option>
                                         <?php
                                         foreach ($genreList as $genreItem)
@@ -223,14 +231,35 @@
                         <div class="Content" style="padding:20px">
                             <div class="card-deck">
                                 <?php
+
                                 if (isset($userGenres)) {
+
                                     foreach ($userGenres as $user) {
+                                        if ($user["username"] == $this->session->userdata('userdata')["username"]){
+                                            continue;
+                                        }
                                         echo "<div class=\"card\">";
                                         echo "<img class=\"card-img-top\" src=" . $user["imageURL"] . " alt=\"Card image cap\">";
                                         echo " <div class=\"card-body\">
                                             <h5 class=\"card-title\">" . $user["username"] . "</h5>
-                                            <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        </div></div>";
+                                            <a class=\"card-text\" href=\"" . base_url("index.php/User_controller/loadMemberProfile/$user[username]") . "\">
+                                            Show Profile
+                                            </a>";
+                                        if (!$user["isFollowed"]) {
+                                            echo  "<a  href=\"" . base_url("index.php/User_controller/startFollowing/$genreId/$user[username]") . "\">
+                                                <button class=\"btn btn-success btn-sm btn-block\">
+                                                    Follow
+                                                </button>
+                                            </a>";
+                                        } else {
+                                            echo  "<a  href=\"" . base_url("index.php/User_controller/stopFollowing/$genreId/$user[username]") . "\">
+                                            <button class=\"btn btn-danger btn-sm btn-block\">
+                                                Unfollow
+                                            </button>
+                                        </a>";
+                                        }
+
+                                        echo "</div></div>";
                                     }
                                 } else {
                                     echo "<h5>Please Search from the above Options<h5/>";
