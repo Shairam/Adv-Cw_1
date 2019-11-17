@@ -13,13 +13,15 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/profile.css" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sk_theme.css" crossorigin="anonymous">
+
     <!--Custom styles-->
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Numans');
-
-      
+        body {
+            background: linear-gradient(to right, #f2f2f2, #3AD88D);
+            min-height: 100vh;
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -30,7 +32,7 @@
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
                 <h1 class="display-4 font-sh-1">SK MusicoBook</h1>
-                <p class="lead mb-0">Best place to meet your mates</p>
+                <p class="lead mb-0">Best place to meet your Music mates</p>
                 </p>
             </div>
         </div>
@@ -47,17 +49,17 @@
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
+                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
                 <!-- Profile widget -->
 
-                <div class="bg-white shadow rounded ">
-
-
+                <div class="bg-white shadow rounded brder">
                     <div class="py-4">
-                        <h5 class="mb-3 font-sh-1" style="text-align:center">Recent posts</h5>
+                        <h5 class="mb-3 font-sh-1" style="text-align:center">Recent posts on ya MusicLine <i class="fa fa-music" aria-hidden="true"></i>
+                        </h5>
 
                         <div class="p-4 bg-light rounded shadow-sm">
                             <a href="www.google.com">
@@ -87,9 +89,9 @@
                                 }
                                 echo "</div>";
                             }
-                            
+
                             echo "<h5 class=\"font-sh-1\">" . $postItem["title"] . "</h5>";
-                            echo "<p class=\"post-text\">" . $postItem["description"] . "</p>";
+                            echo "<p class=\"post-text\">" . replaceLinks($postItem["description"]) . "</p>";
                             echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>" . $postItem["createdOn"] . "</li>";
                             echo "</hr>";
                             echo "<hr/>";

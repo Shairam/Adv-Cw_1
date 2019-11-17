@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 class User_controller extends CI_Controller
 {
 
-    public $memberDataArr;
+	public $memberDataArr;
 	public function __construct()
 	{
 		// placing it here fails: $this has no `load` property yet.
@@ -15,10 +15,10 @@ class User_controller extends CI_Controller
 		// placing it here should work as the parent class has added that property
 		// during it's own constructor
 		$this->load->database();
-        $this->load->model("User");
-        $this->load->model("Post");
-        $this->load->model("Genre");
-        $this->load->model("Followings");
+		$this->load->model("User");
+		$this->load->model("Post");
+		$this->load->model("Genre");
+		$this->load->model("Followings");
 	}
 	/**
 	 * Index Page for this controller.
@@ -36,32 +36,43 @@ class User_controller extends CI_Controller
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-     public function loadMemberProfile(){
-        $memberName = $this->uri->segment(3);
-        $this->memberDataArr = array(
-            'memberInfo' => $this->User->findUser($memberName),
-            'memberPosts' => $this->Post->userPosts($memberName),
-            'memberFollowDetails' => $this->Followings->getFollowCounts($memberName),
-            'memberGenres' => $this->Genre->getUserGenres($memberName)
+	public function loadMemberProfile()
+	{
+		$memberName = $this->uri->segment(3);
+
+		if ($memberName != $this->session->userdata('userdata')["username"]) {
+			$this->loadUserData($memberName);
+			$isFollowed = $this->User->checkFollow($memberName, $this->session->userdata('userdata')["username"]);
+			$this->memberDataArr["isFollowed"] = $isFollowed;
+			$this->load->view("user_profile", $this->memberDataArr);
+		} else {
+			$this->loadUserData($memberName);
+			$this->load->view("user_profile", $this->memberDataArr);
+		}
+	}
+	public function loadUserData($memberName)
+	{
+		$this->memberDataArr = array(
+			'memberInfo' => $this->User->findUser($memberName),
+			'memberPosts' => $this->Post->userPosts($memberName),
+			'memberFollowDetails' => $this->Followings->getFollowCounts($memberName),
+			'memberGenres' => $this->Genre->getUserGenres($memberName)
 		);
-		$isFollowed = $this->User->checkFollow($memberName, $this->session->userdata('userdata')["username"]);
-		$this->memberDataArr["isFollowed"] = $isFollowed;
-		$this->load->view("user_profile", $this->memberDataArr);
-		
-	 }
-	 
-	 public function startFollowing(){
+	}
+
+	public function startFollowing()
+	{
 		$genreId = $this->uri->segment(3);
 		$memberName = $this->uri->segment(4);
 		$added = $this->User->startFollowing($memberName);
 		redirect("welcome/testSearch/$genreId");
-	 }
-	 
-	 public function stopFollowing(){
+	}
+
+	public function stopFollowing()
+	{
 		$genreId = $this->uri->segment(3);
 		$memberName = $this->uri->segment(4);
 		$removed = $this->User->stopFollowing($memberName);
 		redirect("welcome/testSearch/$genreId");
-	 }
-
+	}
 }

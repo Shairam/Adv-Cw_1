@@ -98,28 +98,26 @@ class User extends CI_Model
 
     function testImagesView($formData)
     {
-        $imageArr = $this->input->post($formData);
-        var_dump($imageArr);
-        if (is_array($imageArr)) {
-            if ($imageArr[0] != "") {
+        if (is_array($formData)) {
+            if ($formData[0] != "") {
 
-                foreach ($imageArr as $value) {
+                foreach ($formData as $value) {
                     if (!$this->testimages($value)) {
                         return null;
                     }
                 }
             }
-            return $imageArr;
+            return $formData;
         } else {
-            if ($imageArr != "" || isset($imageArr)) {
-                var_dump($imageArr);
-                    if (!$this->testimages($imageArr)) {
-                        var_dump("hit");
+            if ($formData == "" || $formData == null){
+                $formData = "https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg";
+            }
+            else  {
+                    if (!$this->testimages($formData)) {
                         return null;
                     }
-                
             }
-            return $imageArr;
+            return $formData;
          }
     }
     function checkURL($text)

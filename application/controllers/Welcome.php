@@ -13,6 +13,7 @@ class Welcome extends CI_Controller
 		parent::__construct();
 		// placing it here should work as the parent class has added that property
 		// during it's own constructor
+
 		date_default_timezone_set('Europe/London');
 		$this->load->model("Genre");
 		$this->load->model("Followings");
@@ -63,18 +64,10 @@ class Welcome extends CI_Controller
 		$this->load->view("create_post");
 	}
 
-	public function loadProfile()
-	{
-		$this->arr["strGenre"] = $this->Genre->getUserGenres($this->session->userdata('userdata')["username"]);
-		$this->arr["postsData"] = $this->Post->userPosts($this->session->userdata('userdata')["username"]);
-		$this->arr["followDetails"] = $this->Followings->getFollowCounts($this->session->userdata('userdata')["username"]);
-		$this->load->view("profile", $this->arr);
-	}
-
 	public function createPost()
 	{
 
-		$imageArr = $this->User->testImagesView("myInputs");
+		$imageArr = $this->User->testImagesView(($this->input->post("myImages")));
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
 		if ($imageArr == null) {
@@ -87,20 +80,19 @@ class Welcome extends CI_Controller
 			$this->Post->createNewPost($title, $description, null);
 			echo "<script>
 					alert('Post created successfully');
-					window.location.href=\"" . base_url() . "\";
+					window.location.href=\"" . base_url("index.php/welcome/") . "\";
 				</script>";
 		} else {
 			$this->Post->createNewPost($title, $description, $imageArr);
 			echo "<script>
 					alert('Post created successfully');
-					window.location.href=\"" . base_url() . "\";
+					window.location.href=\"" . base_url("index.php/welcome/") . "\";
 				</script>";
 		}
 	}
 
 	public function loadAllPosts()
 	{
-		//var_dump($this->Post->loadHomePosts());
 		$this->load->view("home",  $this->arr);
 	}
 

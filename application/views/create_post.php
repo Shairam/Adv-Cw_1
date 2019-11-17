@@ -12,84 +12,14 @@
 
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sk_theme.css" crossorigin="anonymous">
+
     <!--Custom styles-->
     <style>
-        /* Made with love by Mutiullah Samim*/
-
-        @import url('https://fonts.googleapis.com/css?family=Numans');
-
-        .profile-header {
-            transform: translateY(5rem);
-        }
-
-
-        /*
-*
-* ==========================================
-* FOR DEMO PURPOSE
-* ==========================================
-*
-*/
         body {
             background: linear-gradient(to right, #f2f2f2, #3AD88D);
             min-height: 100vh;
             margin: 0;
-        }
-
-        .header {
-            background: #f2f2f2;
-            padding: 10px;
-            text-align: center;
-            text: #3AD88D
-        }
-
-        #navbar {
-            overflow: hidden;
-            background-color: #333;
-            width: 47%;
-        }
-
-        #navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        #navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        #navbar a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .content {
-            padding: 16px;
-        }
-
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-
-        .sticky+.content {
-            padding-top: 60px;
-        }
-
-        .round-img {
-            border-radius: 50%;
-        }
-
-        .font-sh-1 {
-            font-family: 'Sofia';
         }
     </style>
 </head>
@@ -101,7 +31,7 @@
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
                 <h1 class="display-4 font-sh-1">SK MusicoBook</h1>
-                <p class="lead mb-0">Best place to meet your mates</p>
+                <p class="lead mb-0">Best place to meet your Music mates</p>
                 </p>
             </div>
         </div>
@@ -113,12 +43,13 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar">
+            <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
+                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
@@ -145,7 +76,7 @@
 
                                 <div class="form-group" id="image-div">
                                     <div id="dynamicInput[0]">
-                                        Upload images here (urls:- )<br><input type="text" name="myInputs[]">
+                                        Upload images here (urls:- )<br><input type="text" name="myImages[]">
                                         <input type="button" value="+" onClick="addInput();">
                                     </div>
                                 </div>
@@ -179,10 +110,10 @@
         var dynamicInput = [];
 
         function addInput() {
-           // alert("His");
+            // alert("His");
             var newdiv = document.createElement('div');
             newdiv.id = dynamicInput[counter];
-            newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myInputs[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
+            newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myImages[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
             document.getElementById('image-div').appendChild(newdiv);
             counter++;
         }

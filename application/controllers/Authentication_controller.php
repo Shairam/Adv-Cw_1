@@ -35,8 +35,8 @@ class Authentication_controller extends CI_Controller
 	public function registerUser()
 	{
 
-		
-		if(!$this->User->testImagesView("imgURL")){
+		$imageURL = $this->User->testImagesView($this->input->post("imgURL"));
+		if (!$imageURL) {
 			echo "<script>
 			alert('Invalid URL');
 			window.location.href=\"".$this->config->item('application_url')."\"
@@ -51,17 +51,15 @@ class Authentication_controller extends CI_Controller
 			$this->input->post("lname"),
 			$this->input->post("dob"),
 			$this->input->post("email"),
-			$this->input->post("imgURL"),
+			$imageURL,
 			$this->input->post("genres")
 		);
 
 		if ($result === 1062) {
 			echo "<script>
-			alert('User with that name already exists!!! Try again');
-			window.location.href=".$this->config->item('application_url')."
-			</script>";
-			$arr = $this->Genre->loadGenres();
-			$this->load->view("welcome_message", $arr);
+			alert('User already exists');
+			window.location.href=\"".$this->config->item('application_url')."\"
+				</script>";
 		} else {
 			redirect($this->config->item('entry_point'));
 		}

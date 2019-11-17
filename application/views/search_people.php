@@ -11,130 +11,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!--Fontawesome CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sk_theme.css" crossorigin="anonymous">
 
     <!--Custom styles-->
     <style>
-        /* Made with love by Mutiullah Samim*/
+        
 
-        @import url('https://fonts.googleapis.com/css?family=Numans');
-
-        /*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
-        .profile-header {
-            transform: translateY(5rem);
-        }
-
-
-        /*
-*
-* ==========================================
-* FOR DEMO PURPOSE
-* ==========================================
-*
-*/
         body {
-            background: #f2f2f2;
+            background: linear-gradient(to right, #f2f2f2, #3AD88D);
             min-height: 100vh;
             margin: 0;
-        }
-
-        .header {
-            background: linear-gradient(to right, #f2f2f2, #3AD88D);
-            padding: 10px;
-            text-align: center;
-            text: #3AD88D
-        }
-
-        #navbar {
-            overflow: hidden;
-            background-color: #333;
-            width: 47%;
-        }
-
-        #navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        #navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        #navbar a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .content {
-            padding: 16px;
-        }
-
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-
-        .sticky+.content {
-            padding-top: 60px;
-        }
-
-        .headTitle {
-            font-family: 'Sofia';
-        }
-
-        .round-img {
-            border-radius: 50%;
-        }
-
-        .multiselect {
-            width: 200px;
-        }
-
-        .selectBox {
-            position: relative;
-        }
-
-        .selectBox select {
-            width: 100%;
-            font-weight: bold;
-        }
-
-        .overSelect {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-        }
-
-        #checkboxes {
-            display: none;
-            border: 1px #dadada solid;
-        }
-
-        #checkboxes label {
-            display: block;
-        }
-
-        #checkboxes label:hover {
-            background-color: #1e90ff;
-        }
-
-        .round-img {
-            border-radius: 50%;
         }
 
         .FixedHeightContainer {
@@ -179,8 +65,8 @@
         <div class="row">
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
-                <h1 class="display-4">SK MusicoBook</h1>
-                <p class="lead mb-0">Best place to meet your mates</p>
+                <h1 class="display-4 font-sh-1">SK MusicoBook</h1>
+                <p class="lead mb-0">Best place to meet your Music mates</p>
                 </p>
             </div>
         </div>
@@ -197,13 +83,15 @@
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
+                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
                 <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded py-5 px-4">
+                    <h5>Serach For people</h5>
                     <form class="form-inline md-form mr-auto mb-4" action="<?php echo site_url() ?>/welcome/testSearch" method="get">
                         <div class="input-group form-group">
                             <div class="multiselect">
@@ -223,11 +111,6 @@
                         <input type="submit" class="btn btn-outline-success btn-rounded waves-effect blink_me" value="Search">
                     </form>
                     <div class="FixedHeightContainer">
-                        <?php
-                        if (isset($userGenres)) {
-                            echo " <h2>" . count($userGenres) . " Users Found</h2></br>";
-                        }
-                        ?>
                         <div class="Content" style="padding:20px">
                             <div class="card-deck">
                                 <?php
@@ -235,7 +118,7 @@
                                 if (isset($userGenres)) {
 
                                     foreach ($userGenres as $user) {
-                                        if ($user["username"] == $this->session->userdata('userdata')["username"]){
+                                        if ($user["username"] == $this->session->userdata('userdata')["username"]) {
                                             continue;
                                         }
                                         echo "<div class=\"card\">";
@@ -262,7 +145,7 @@
                                         echo "</div></div>";
                                     }
                                 } else {
-                                    echo "<h5>Please Search from the above Options<h5/>";
+                                    echo "<h5>Please Search Users from the above Options</h5>";
                                 }
                                 ?>
                             </div>

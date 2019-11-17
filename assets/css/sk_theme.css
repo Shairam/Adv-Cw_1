@@ -1,24 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Sofia');
 
-        @import url('https://fonts.googleapis.com/css?family=Numans');
-
-        /*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
-        .profile-header {
-            transform: translateY(5rem);
-        }
-
-        /*
-*
-* ==========================================
-* FOR DEMO PURPOSE
-* ==========================================
-*
-*/
         body {
             background: #f2f2f2;
             background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
@@ -83,3 +64,29 @@
         .round-img {
             border-radius: 50%;
         }
+
+        .font-sh-1 {
+            font-family: 'Sofia';
+        }
+        .rounded {
+            border-radius: 20px !important;
+        }
+
+#slide {
+    width: 600px;
+    height: 200px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    white-space: nowrap;
+}
+
+.post-text{
+    font-family: 'Lora';
+    
+}
+
+.postImages {
+    padding: 5px;
+    width: 200px;
+    height: 180px;
+}

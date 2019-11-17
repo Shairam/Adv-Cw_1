@@ -68,6 +68,7 @@ body {
 
 .font-sh-1 {
     font-family: 'Sofia';
+    font-size: 1.5rem;
 }
 .headTitle {
     font-family: 'Sofia';
@@ -87,6 +88,7 @@ body {
 
 .post-text{
     font-family: 'Lora';
+    
 }
 
 .postImages {

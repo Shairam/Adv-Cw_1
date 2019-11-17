@@ -23,8 +23,11 @@
 
         .btn-sm {
             width: 100px;
-            height: 40px;
-            float: left;
+            height: 35px;
+            
+        }
+        #btn-sh-1 {
+           float: right;
         }
         
     </style>
@@ -37,7 +40,7 @@
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
                 <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
                 <h1 class="display-4 headTitle">SK MusicoBook</h1>
-                <p class="lead mb-0">Best place to meet your mates</p>
+                <p class="lead mb-0">Best place to meet your Music mates</p>
                 </p>
             </div>
         </div>
@@ -49,12 +52,13 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar">
+            <div id="navbar">
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
+                    <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
@@ -63,19 +67,16 @@
                 <div class="bg-white shadow rounded ">
                     <div class="px-4 pt-0 pb-4 bg-dark">
                         <div class="media align-items-end profile-header">
-                            <div class="profile mr-3"><img src="<?php echo $memberInfo["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail">
-
-
-
-                            </div>
+                            <div class="profile mr-3"><img src="<?php echo $memberInfo["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"></div>
                             <div class="media-body mb-5 text-white">
                                 <h4 class="mt-0 mb-0"><?php echo $memberInfo["firstname"] . " " . $memberInfo["lastname"] ?></h4>
                                 <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $memberGenres ?></p>
-                            
+                                
                             </div>
+                            
                         </div>
                     </div>
-                    
+                   
 
                     <div class="bg-light p-4 d-flex justify-content-end text-center">
                         <ul class="list-inline mb-0">
@@ -90,17 +91,8 @@
                             </li>
                             <br />
                         </ul>
-
-                        <!-- <?php
-                                if (!$isFollowed) {
-
-                                } else{
-
-                                }
-
-                                ?> -->
-
                     </div>
+                    
 
 
                     <div class="py-4">
@@ -134,7 +126,7 @@
                             }
 
                             echo "<h5 class=\"font-sh-1\">" . $postItem["title"] . "</h5>";
-                            echo "<p class=\"post-text\">" . $postItem["description"] . "</p>";
+                            echo "<p class=\"post-text\">" . replaceLinks($postItem["description"]) . "</p>";
                             echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>" . $postItem["createdOn"] . "</li>";
                             echo "</hr>";
                             echo "<hr/>";
