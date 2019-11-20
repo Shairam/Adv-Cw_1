@@ -1,3 +1,4 @@
+
 $('#signUpLink').click(function(){ onSignupClick(); return false; });
 $('#signInLink').click(function(){ onSignInclick(); return false; });
 
@@ -16,6 +17,8 @@ function showCheckboxes() {
 }
 
 $("#signUpForm").submit(function(){
+  alert("hi");
+  console.log("Hit here");
   var checked = $("#signUpForm input:checked").length > 0;
   if (!checked){
       alert("Please check at least one checkbox");

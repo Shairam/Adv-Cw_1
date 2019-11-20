@@ -123,7 +123,8 @@
                                         echo "</div></div>";
                                     }
                                 } else {
-                                    echo "Sorry no users found <img src=http://clipart-library.com/images/pcodBaxqi.png width=\"100px\" height=\"100px\">";
+                                    echo "<p>Sorry no users found<p> <br/>";
+                                    echo "<img src=http://atlas-content-cdn.pixelsquid.com/stock-images/sad-emoji-facial-expression-QJDyGk5-600.jpg height=\"100px\" width=\"100px\">";
                                 }
                                 ?>
                             </div>

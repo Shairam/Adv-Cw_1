@@ -49,7 +49,7 @@
                 <div class="bg-white shadow rounded ">
                     <div class="px-4 pt-0 pb-4 bg-dark">
                         <div class="media align-items-end profile-header">
-                            <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
+                            <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"></div>
                             <div class="media-body mb-5 text-white">
                                 <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></h4>
                                 <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $memberGenres ?></p>
@@ -87,13 +87,11 @@
 
                         <?php // Display list of Logged in user's posts
                         foreach ($memberPosts as $postItem) {
-
                             echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
                             echo "<img class=\"round-img\" src=" . $memberInfo["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
                             echo "<h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4>";
                             echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
                             if (count($postItem["ImageLists"]) > 0) {
-
                                 echo " <div id=\"slide\">";
                                 foreach ($postItem["ImageLists"] as $imageLink) {
                                     echo "<img src=\" " . $imageLink["imageURL"] . "\" class=\"postImages\">";
@@ -111,7 +109,6 @@
                         {
                             echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
                         }
-
                         ?>
                     </div>
                 </div>
@@ -124,15 +121,11 @@
         window.onscroll = function() {
             myFunction()
         };
-
         var navbar = document.getElementById("navbar");
         var sticky = navbar.offsetTop;
-
         navbar.classList.add("sticky");
-
         function myFunction() {
             if (window.pageYOffset >= sticky) {
-
             } else {
                 navbar.classList.remove("sticky");
             }

@@ -74,7 +74,7 @@
 				<h3>Sign Up</h3>
 			</div>
 			<div class="card-body card-signUp">
-				<form action="<?php echo site_url() ?>/authentication_controller/registerUser" method="post" id="#signUpForm">
+				<form action="<?php echo site_url() ?>/authentication_controller/registerUser" method="post" id="signUpForm">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
