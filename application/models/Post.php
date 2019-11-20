@@ -21,14 +21,13 @@ class Post extends CI_Model
         $resultArr =  $query->result_array();
         if ($resultArr) {
             foreach ($resultArr as &$postItem) {
-                $query = $this->db->get_where("Post_Images", array('postId' => $postItem["postId"]));
-                $postItem["ImageLists"] = $query->result_array();
+                $this->testImagesView($postItem);
             }
         }
         return $resultArr;
     }
 
-    public function createNewPost($title, $description, $imageArr)  // Creates a new post 
+    public function createNewPost($title, $description)  // Creates a new post 
     {
         $date = date('Y-m-d H:i:s');
         $data = array(
@@ -38,11 +37,6 @@ class Post extends CI_Model
             'title' => $title
         );
         $this->db->insert('Posts', $data);
-        $id = $this->db->insert_id();
-
-        if (isset($imageArr)) {
-            $this->insertPostImages($id, $imageArr);
-        }
     }
 
     public function loadPostImages($post_id)       // Fetch images' URLs of a post if available
@@ -62,21 +56,65 @@ class Post extends CI_Model
         $resultArr = $result->result_array();
         if ($resultArr) {
             foreach ($resultArr as &$postItem) {
-                $query = $this->db->get_where("Post_Images", array('postId' => $postItem["postId"]));
-                $postItem["ImageLists"] = $query->result_array();
+                $this->testImagesView($postItem);
             }
         }
         return $resultArr;
-    }
+    }   	
 
-    public function insertPostImages($post_id, $imageArr)   // Insert image URLS included for a particular post
-    {
-        foreach ($imageArr as $imageURL) {
-            $data = array(
-                'postId' => $post_id,
-                'imageURL' => $imageURL
-            );
-            $this->db->insert('Post_Images', $data);
+        function findLinks($postDescription)
+        {
+            preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $postDescription, $match);
+            return $match[0];
         }
-    }
+
+        function testImagesView(&$postItem)  // Perform image URL check
+        {
+            $postItem["ImageLists"] = array();
+            $linksArr = $this->findLinks($postItem["description"]);
+
+            if(isset($linksArr))
+            foreach ($linksArr as $imageLink){
+            if ($this->testimages($imageLink)) {
+                array_push($postItem["ImageLists"],$imageLink);
+            }
+        }
+        
+        }
+        function checkURL($text)        // Check if a string is a valid URL
+        {
+            if (filter_var($text, FILTER_VALIDATE_URL)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+	function testimages($URL)   // Check if the given Image URL actually returns an Image 
+	{
+		if (!$this->checkURL($URL)) {
+			return false;
+		}
+
+		$urlHeaders = get_headers($URL, 1);
+
+		if (count($urlHeaders['Content-Type']) != 1) {
+			return false;
+		}
+
+		$type = strtolower($urlHeaders['Content-Type']);
+
+		$valid_image_type = array();
+		$valid_image_type['image/png'] = '';
+		$valid_image_type['image/jpg'] = '';
+		$valid_image_type['image/jpeg'] = '';
+		$valid_image_type['image/jpe'] = '';
+
+		if (isset($valid_image_type[$type])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

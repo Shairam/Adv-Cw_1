@@ -5,8 +5,7 @@
 
 <head>
     <title><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></title>
-    <!--Made with love by Mutiullah Samim -->
-
+    
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -47,7 +46,7 @@
                 </div>
 
                 <div class="bg-white shadow rounded ">
-                    <div class="px-4 pt-0 pb-4 bg-dark">
+                <div class="px-4 pt-0 pb-4" style="background-image: url('https://i.ytimg.com/vi/kVGXAfzVIkE/maxresdefault.jpg');" >
                         <div class="media align-items-end profile-header">
                             <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"></div>
                             <div class="media-body mb-5 text-white">
@@ -94,7 +93,7 @@
                             if (count($postItem["ImageLists"]) > 0) {
                                 echo " <div id=\"slide\">";
                                 foreach ($postItem["ImageLists"] as $imageLink) {
-                                    echo "<img src=\" " . $imageLink["imageURL"] . "\" class=\"postImages\">";
+                                    echo "<img src=\" " . $imageLink . "\" class=\"postImages\">";
                                 }
                                 echo "</div>";
                             }

@@ -5,7 +5,7 @@
 
 <head>
 	<title>Login Page</title>
-	<!--Made with love by Mutiullah Samim -->
+	<!--Made with love by ShaI  -->
 
 	<!--Bootsrap 4 CDN-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -52,9 +52,6 @@
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="#" id="signUpLink">Sign Up</a>
-				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
 				</div>
 			</div>
 		</div>
@@ -158,7 +155,6 @@
 					Already have an account?<a href="#" id="signInLink">Login</a>
 				</div>
 				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
 				</div>
 			</div>
 		</div>

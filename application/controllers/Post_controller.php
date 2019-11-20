@@ -27,27 +27,8 @@ class Post_controller extends CI_Controller
 	public function createPost()  // Create Post 
 	{
 
-		$imageArr = $this->User->testImagesView(($this->input->post("myImages"))); //CHeck if image URLs are valid
 		$title = $this->input->post("title");
 		$description = $this->input->post("description");
-		if ($imageArr == null) {
-			echo "<script>
-					alert('Please Check your uploading images URL');
-					window.location.href=\"" . base_url("index.php/welcome/") . "\";
-				</script>";
-			
-		} else if ($imageArr[0] == "") { 
-			$this->Post->createNewPost($title, $description, null);
-			echo "<script>
-					alert('Post created successfully');
-					window.location.href=\"" . base_url("index.php/welcome/") . "\";
-				</script>";
-		} else {
-			$this->Post->createNewPost($title, $description, $imageArr);
-			echo "<script>
-					alert('Post created successfully');
-					window.location.href=\"" . base_url("index.php/welcome/") . "\";
-				</script>";
-		}
+		$this->Post->createNewPost($title, $description);
 	}
 }

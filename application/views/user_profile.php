@@ -5,7 +5,7 @@
 
 <head>
     <title><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></title>
-    <!--Made with love by Mutiullah Samim -->
+    <!--Made with love by ShaI  -->
 
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="bg-white shadow rounded ">
-                    <div class="px-4 pt-0 pb-4 bg-dark">
+                    <div class="px-4 pt-0 pb-4" style="background-image: url('https://i.ytimg.com/vi/kVGXAfzVIkE/maxresdefault.jpg" >
                         <div class="media align-items-end profile-header">
                             <div class="profile mr-3"><img src="<?php echo $memberInfo["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"></div>
                             <div class="media-body mb-5 text-white">
@@ -102,19 +102,19 @@
 
                     <div class="py-4">
                         <h5 class="mb-3" style="text-align:center">Recent posts</h5>
-
+                        
                         <?php // Display list of a specific user's posts
                         foreach ($memberPosts as $postItem) {
 
                             echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
-                            echo "<img class=\"round-img\" src=" . $this->session->userdata('userdata')["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
-                            echo "<span><h4 class=\"headTitle\">" . $this->session->userdata('userdata')["username"] . "</h4></span>";
+                            echo "<img class=\"round-img\" src=" . $memberInfo["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                            echo "<span><h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4></span>";
                             echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
                             if (count($postItem["ImageLists"]) > 0) {
 
                                 echo " <div id=\"slide\">";
                                 foreach ($postItem["ImageLists"] as $imageLink) {
-                                    echo "<img src=\" " . $imageLink["imageURL"] . "\" class=\"postImages\">";
+                                    echo "<img src=\" " . $imageLink . "\" class=\"postImages\">";
                                 }
                                 echo "</div>";
                             }

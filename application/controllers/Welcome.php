@@ -28,8 +28,16 @@ class Welcome extends CI_Controller //This is the main controller. Entry Point
 		if (!$this->session->userdata('userdata')) {
 			$this->load->view('auth_page', $this->arr);
 		} else {
-			$this->arr["genreList"] = $this->Genre->loadGenres();
-			$this->arr["postsData"] = $this->Post->userPosts($this->session->userdata('userdata')["username"]);
+			$memberName = $this->session->userdata('userdata')["username"];
+			$this->arr = array(
+				'memberInfo' => $this->User->findUser($memberName),
+				'memberPosts' => $this->Post->userPosts($memberName),
+				'memberFollowDetails' => $this->Followings->getFollowCounts($memberName),
+				'memberGenres' => $this->Genre->getUserGenres($memberName),
+				'friendsCount' => count($this->User->getQueryFriends()),
+				'genreList' => $this->Genre->loadGenres(),
+				'allPosts' => $this->Post->loadHomePosts()
+			);
 			$this->loadAllPosts();
 		}
 	}
