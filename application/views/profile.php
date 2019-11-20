@@ -13,15 +13,13 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+    <!--Assest/css-->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/profile.css" crossorigin="anonymous">
-    <!--Custom styles-->
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Numans');
-    </style>
 </head>
 
 <body>
-
+<!-- Header Section -->
     <div class="header">
         <div class="row">
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
@@ -33,22 +31,20 @@
         </div>
     </div>
 
-    <!-- For demo purpose -->
-    <!-- End -->
-
+    <!-- Main contents Section -->
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-            <div id="navbar">
+            <div id="navbar"> <!-- Navigation bar Section -->
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
                     <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/loadProfile" style="float:right"><img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
+                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
-                <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded ">
                     <div class="px-4 pt-0 pb-4 bg-dark">
@@ -56,45 +52,46 @@
                             <div class="profile mr-3"><img src="<?php echo $this->session->userdata('userdata')["imageURL"] ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail"><a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a></div>
                             <div class="media-body mb-5 text-white">
                                 <h4 class="mt-0 mb-0"><?php echo $this->session->userdata('userdata')["firstname"] . " " . $this->session->userdata('userdata')["lastname"] ?></h4>
-                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $strGenre ?></p>
+                                <p class="small mb-4"> <i class="fa fa-music mr-2"></i><?php echo  "Interested in " . $memberGenres ?></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-light p-4 d-flex justify-content-end text-center">
                         <ul class="list-inline mb-0">
+                        <a href="#postsView">
                             <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block"><?php echo count($postsData); ?></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo count($memberPosts); ?></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
+                            </li>
+                        </a>
+                            <li class="list-inline-item">
+                            <a href="<?php echo base_url() ?>index.php/User_controller/getFollowers">
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $memberFollowDetails["Followers"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
+                            </a>
                             </li>
                             <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $followDetails["Followers"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
+                            <a href="<?php echo base_url() ?>index.php/User_controller/getFollowings">
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $memberFollowDetails["Following"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Following</small>
+                            </a>
                             </li>
                             <li class="list-inline-item">
-                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $followDetails["Following"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Following</small>
+                                <a href="<?php echo base_url() ?>index.php/User_controller/getFriends">
+                                <h5 class="font-weight-bold mb-0 d-block"><?php echo $friendsCount; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Friends</small>
+                                </a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="py-4">
-                        <h5 class="mb-3" style="text-align:center">Recent posts</h5>
+                        <h5 id="postsView" class="mb-3 font-sh-1" style="text-align:center">Recent posts</h5>
 
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                            <hr />
-                        </div>
+                        <?php // Display list of Logged in user's posts
+                        foreach ($memberPosts as $postItem) {
 
-                        <?php
-                        foreach ($postsData as $postItem) {
-
-                            echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
+                            echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
+                            echo "<img class=\"round-img\" src=" . $memberInfo["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                            echo "<h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4>";
+                            echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
                             if (count($postItem["ImageLists"]) > 0) {
 
                                 echo " <div id=\"slide\">";
@@ -104,13 +101,12 @@
                                 echo "</div>";
                             }
                             echo "<h5 class=\"font-sh-1\">" . $postItem["title"] . "</h5>";
-                            echo "<p class=\"post-text\">" . $postItem["description"] . "</p>";
-                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>".$postItem["createdOn"]."</li>";
+                            echo "<p class=\"post-text\">" . replaceLinks($postItem["description"]) . "</p>";
                             echo "</hr>";
                             echo "<hr/>";
                             echo "</div>";
                         }
-
+                        //Below function will replace any links in post description with anchor tag
                         function replaceLinks($text)
                         {
                             echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
@@ -124,7 +120,7 @@
 
     </div>
 
-    <script>
+    <script>//Holds Nav bar on top
         window.onscroll = function() {
             myFunction()
         };

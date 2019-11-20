@@ -13,7 +13,7 @@ class Post extends CI_Model
         $this->load->database();
     }
 
-    public function userPosts($username)
+    public function userPosts($username)           // Fetch all posts made by a particular user 
     {
 
         $this->db->order_by("createdOn", "desc");
@@ -28,7 +28,7 @@ class Post extends CI_Model
         return $resultArr;
     }
 
-    public function createNewPost($title, $description, $imageArr)
+    public function createNewPost($title, $description, $imageArr)  // Creates a new post 
     {
         $date = date('Y-m-d H:i:s');
         $data = array(
@@ -45,13 +45,13 @@ class Post extends CI_Model
         }
     }
 
-    public function loadPostImages($post_id)
+    public function loadPostImages($post_id)       // Fetch images' URLs of a post if available
     {
         $query = $this->db->get_where("Post_Images", array('postId' => $post_id));
         return $query->result_array();
     }
 
-    public function loadHomePosts()
+    public function loadHomePosts()         // Fetches the list of posts made by currently logged in user and also the posts made by that user's followers
     {
 
         $result = $this->db->query("(SELECT Posts.*, Users.imageURL FROM Posts INNER JOIN
@@ -69,7 +69,7 @@ class Post extends CI_Model
         return $resultArr;
     }
 
-    public function insertPostImages($post_id, $imageArr)
+    public function insertPostImages($post_id, $imageArr)   // Insert image URLS included for a particular post
     {
         foreach ($imageArr as $imageURL) {
             $data = array(

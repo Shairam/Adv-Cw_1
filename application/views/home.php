@@ -1,5 +1,3 @@
-<!------ Include the above in your HEAD tag ---------->
-
 <!DOCTYPE html>
 <html>
 
@@ -21,6 +19,11 @@
             background: linear-gradient(to right, #f2f2f2, #3AD88D);
             min-height: 100vh;
             margin: 0;
+        }
+
+        .post-item {
+            width: 80%;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -55,49 +58,74 @@
                     </a>
                 </div>
                 <!-- Profile widget -->
+                <div class="bg-white rounded brder">
+                    <div style="height:8.5%;" class="post-item bg-white">
+
+                        <!-- Post creation Section -->
+                        <h1 class="font-sh-1">Create post</h1>
+
+                        <form action="<?php echo base_url() ?>index.php/Post_controller/createPost" method="POST">
+
+                            <div>
+                                <label for="title">Title <span class="require">*</span></label>
+                                <input type="text" size="30" name="title" autocomplete="off" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description <span class="require">*</span></label><br />
+                                <textarea rows="4" cols="50" name="description" required></textarea>
+                            </div>
+
+                            <div class="form-group" id="image-div">
+                                <div id="dynamicInput[0]">
+                                    Upload images here (urls:- )<br><input type="text" name="myImages[]">
+                                    <input type="button" value="+" onClick="addInput();">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <p><span class="require">*</span> - required fields</p>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    Create
+                                </button>
+                                <button class="btn btn-default" href=>
+                                    Back
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
 
                 <div class="bg-white shadow rounded brder">
                     <div class="py-4">
                         <h5 class="mb-3 font-sh-1" style="text-align:center">Recent posts on ya MusicLine <i class="fa fa-music" aria-hidden="true"></i>
                         </h5>
-
-                        <div class="p-4 bg-light rounded shadow-sm">
-                            <a href="www.google.com">
-                                <img src="<?php echo base_url("assets/images/home-logo.png") ?>" style="margin:inherit" width="200px" height="200px">
-                                <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <ul class="list-inline small text-muted mt-3 mb-0">
-                                    <li class="list-inline-item"><i class="fa fa-comment-o mr-2"></i>12 Comments</li>
-                                    <li class="list-inline-item"><i class="fa fa-heart-o mr-2"></i>200 Likes</li>
-                                </ul>
-                            </a>
-                            <p>Posted by:- Shairam Sritharan</p>
-                            <hr />
-                        </div>
-
-                        <?php
+                        <?php // Display list of User posts
                         foreach ($allPosts as $postItem) {
 
-                            echo " <div class=\"p-4 bg-light rounded shadow-sm\">";
+                            echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
                             echo "<img class=\"round-img\" src=" . $postItem["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
-                            echo "<span><h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4></span>";
+                            echo "<h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4>";
+                            echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
 
                             if (count($postItem["ImageLists"]) > 0) {
-
                                 echo " <div id=\"slide\">";
                                 foreach ($postItem["ImageLists"] as $imageLink) {
                                     echo "<img src=\" " . $imageLink["imageURL"] . "\" class=\"postImages\">";
                                 }
                                 echo "</div>";
                             }
-
-                            echo "<h5 class=\"font-sh-1\">" . $postItem["title"] . "</h5>";
+                            echo "<h4 class=\"font-sh-1\">" . $postItem["title"] . "</h4>";
                             echo "<p class=\"post-text\">" . replaceLinks($postItem["description"]) . "</p>";
-                            echo " <li class=\"list-inline-item\"><i class\"fa fa-heart-o mr-\"></i>" . $postItem["createdOn"] . "</li>";
-                            echo "</hr>";
                             echo "<hr/>";
                             echo "</div>";
                         }
 
+                        //Below function will replace any links in post description with anchor tag
                         function replaceLinks($text)
                         {
                             echo preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-=#]*(\?\S+)?)?)?)@', '<a href="$1">$1</a>', $text);
@@ -115,18 +143,30 @@
         window.onscroll = function() {
             myFunction()
         };
-
         var navbar = document.getElementById("navbar");
         var sticky = navbar.offsetTop;
-
         navbar.classList.add("sticky");
 
         function myFunction() {
-            if (window.pageYOffset >= sticky) {
-
-            } else {
+            if (window.pageYOffset >= sticky) {} else {
                 navbar.classList.remove("sticky");
             }
+        }
+        // Functions below are used to update the text fields according to multiple no of post images URL
+        var counter = 1;
+        var dynamicInput = [];
+
+        function addInput() {
+            var newdiv = document.createElement('div');
+            newdiv.id = dynamicInput[counter];
+            newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myImages[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
+            document.getElementById('image-div').appendChild(newdiv);
+            counter++;
+        }
+
+        function removeInput(id) {
+            var elem = document.getElementById(id);
+            return elem.parentNode.removeChild(elem);
         }
     </script>
     </div>

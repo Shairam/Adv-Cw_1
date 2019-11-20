@@ -15,24 +15,8 @@ class Authentication_controller extends CI_Controller
 		$this->load->model("User");
 		$this->load->model("Genre");
 	}
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 
-
-	public function registerUser()
+	public function registerUser() // Controller function to register a New user
 	{
 
 		$imageURL = $this->User->testImagesView($this->input->post("imgURL"));
@@ -55,7 +39,7 @@ class Authentication_controller extends CI_Controller
 			$this->input->post("genres")
 		);
 
-		if ($result === 1062) {
+		if ($result === 1062) {  //Check for duplicated username
 			echo "<script>
 			alert('User already exists');
 			window.location.href=\"".$this->config->item('application_url')."\"
@@ -65,10 +49,8 @@ class Authentication_controller extends CI_Controller
 		}
 	}
 
-	public function signInUser()
+	public function signInUser()  // Controller function to login a user
 	{
-	
-		log_message('debug', 'Password given- ' . $this->input->post("password"));
 		$userData = $this->User->validateSignIn($this->input->post("username"), $this->input->post("password"));
 		if (isset($userData)) {
 
@@ -77,7 +59,7 @@ class Authentication_controller extends CI_Controller
 				'firstname' => $userData->firstname,
 				'lastname'  => $userData->lastname,
 				'imageURL'  => $userData->imageURL,
-				//'email'   => $userData->email,
+				'email'   => $userData->email,
 				'dob' => $userData->dob,
 				'logged_in' => TRUE
 			);
@@ -92,7 +74,7 @@ class Authentication_controller extends CI_Controller
 		}
 	}
 
-	public function logoutuser()
+	public function logoutuser()  // Controller function to logout user
 	{
 		$this->session->sess_destroy();
 		redirect($this->config->item('entry_point'));

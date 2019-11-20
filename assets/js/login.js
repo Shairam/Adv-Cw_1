@@ -1,6 +1,7 @@
 $('#signUpLink').click(function(){ onSignupClick(); return false; });
 $('#signInLink').click(function(){ onSignInclick(); return false; });
 
+
 var expanded = false;
 
 function showCheckboxes() {
@@ -14,6 +15,15 @@ function showCheckboxes() {
   }
 }
 
+$("#signUpForm").submit(function(){
+  var checked = $("#signUpForm input:checked").length > 0;
+  if (!checked){
+      alert("Please check at least one checkbox");
+      return false;
+  }
+});
+
+
  function onSignupClick() {
          document.getElementById("con-signIn").style.display = "none";
      document.getElementById("con-signUp").style.display = "block";
@@ -25,7 +35,5 @@ function showCheckboxes() {
     
 }
 
-
-//  $('#signUpLink').trigger('click');
 
 

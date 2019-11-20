@@ -10,7 +10,7 @@
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <!--Assets/CSS-->
+    <!--Assest/css-->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/sk_theme.css" crossorigin="anonymous">
 
     <!--Custom styles-->
@@ -43,22 +43,11 @@
         .card-img-top {
             height: 180px;
         }
-
-        .blink_me {
-            animation: blinker 1s linear infinite;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes blinker {
-            50% {
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 
 <body>
-<!-- Header Section -->
+    <!-- Header Section -->
     <div class="header">
         <div class="row">
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
@@ -70,11 +59,11 @@
         </div>
     </div>
 
-<!-- Main contents Section -->
+    <!-- Main contents Section -->
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar"> <!-- Nav Bar Section -->
+                <div id="navbar"> <!-- Navigation Bar Section -->
                     <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
                     <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
                     <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
@@ -84,35 +73,29 @@
                         <?php echo $this->session->userdata('userdata')["username"] ?>
                     </a>
                 </div>
+                <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded py-5 px-4">
-                    <h5>Search For people</h5> <!-- Search Form Section -->
-                    <form class="form-inline md-form mr-auto mb-4" action="<?php echo site_url() ?>/welcome/routeSearch" method="get">
-                        <div class="input-group form-group">
-                            <div class="multiselect">
-                                <div class="selectBox" onclick="showCheckboxes()" style="padding:10px">
-                                    <select name="genreId">
-                                        <option value=''>Search by Genres</option>
-                                        <?php
-                                        foreach ($genreList as $genreItem)
-                                            echo "<option value='$genreItem[genre_id]'>$genreItem[name]</option>";
-
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                        <input type="submit" class="btn btn-outline-success btn-rounded waves-effect blink_me" value="Search">
-                    </form>
+                    <?php 
+                    $followDisplayBtnTxt = "Follow";
+                     if($membersType ==  $this->config->item('membersTypes')[0]){
+                         echo "<h3 class=\"font-sh-1\"> Here are your Friends</h3>";
+                     } 
+                     if($membersType ==  $this->config->item('membersTypes')[1]){
+                         echo "<h3 class=\"font-sh-1\"> Here are your Followings</h3>";
+                     }
+                     if($membersType ==  $this->config->item('membersTypes')[2]){
+                         echo "<h3 class=\"font-sh-1\"> Here are your Followers</h3>";
+                         $followDisplayBtnTxt = "Follow Back";
+                     }
+                    ?>
                     <div class="FixedHeightContainer">
                         <div class="Content" style="padding:20px">
                             <div class="card-deck">
-                                <?php // List of users in a specific genre
-
-                                if (isset($userGenres)) {
-
-                                    foreach ($userGenres as $user) {
+                                <?php //Display list of users
+                                if (!empty($friendsList)) {
+                                    
+                                    foreach ($friendsList as $user) {
                                         if ($user["username"] == $this->session->userdata('userdata')["username"]) {
                                             continue;
                                         }
@@ -124,13 +107,13 @@
                                             Show Profile
                                             </a>";
                                         if (!$user["isFollowed"]) {
-                                            echo  "<a  href=\"" . base_url("index.php/User_controller/startFollowing/$genreId/$user[username]") . "\">
+                                            echo  "<a  href=\"" . base_url("index.php/User_controller/startFollowing/0/$user[username]") . "\">
                                                 <button class=\"btn btn-success btn-sm btn-block\">
-                                                    Follow
+                                                $followDisplayBtnTxt
                                                 </button>
                                             </a>";
                                         } else {
-                                            echo  "<a  href=\"" . base_url("index.php/User_controller/stopFollowing/$genreId/$user[username]") . "\">
+                                            echo  "<a  href=\"" . base_url("index.php/User_controller/stopFollowing/0/$user[username]") . "\">
                                             <button class=\"btn btn-danger btn-sm btn-block\">
                                                 Unfollow
                                             </button>
@@ -140,7 +123,7 @@
                                         echo "</div></div>";
                                     }
                                 } else {
-                                    echo "<h5>Please Search Users from the above Options</h5>";
+                                    echo "Sorry no users found <img src=http://clipart-library.com/images/pcodBaxqi.png width=\"100px\" height=\"100px\">";
                                 }
                                 ?>
                             </div>
@@ -150,11 +133,9 @@
                 </div>
             </div>
         </div>
+    </div><!-- End profile widget -->
     </div>
-
-    </div>
-
-    <script> //Holds Nav bar on top
+    <script>
         window.onscroll = function() {
             myFunction()
         };
@@ -175,5 +156,4 @@
     </div>
     <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
 </body>
-
 </html>

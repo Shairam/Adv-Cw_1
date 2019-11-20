@@ -12,13 +12,13 @@ class Genre extends CI_Model
         // during it's own constructor
         $this->load->database();
     }
-    public function loadGenres()
+    public function loadGenres()       // Model function to load genre list from database
     {
         $result =  $this->db->get('Genre_lists');
         return $result->result_array();
     }
 
-    public function updateGenre($genrelist, $username)
+    public function updateGenre($genrelist, $username)      // Model function to update database with the selected genre by the user
     {
         foreach ($genrelist as $id) {
             $data = array(
@@ -29,7 +29,7 @@ class Genre extends CI_Model
         }
     }
 
-    public function loadUserGenres($username)
+    public function loadUserGenres($username)   // Model function to fetch list of genres a user is interested in
     {   $dataArr =array();
         if ($this->session->userdata('userdata')) {
             $query = $this->db->get_where('Genre_Bridge', array('username' => $username));
@@ -42,7 +42,7 @@ class Genre extends CI_Model
         }
     }
 
-    public function getUserGenres($username)
+    public function getUserGenres($username)        // Model function to convert the fetched list from the above method to string and return to caller.
 	{
         $strGenre = [];
         $genreLists = $this->loadGenres();

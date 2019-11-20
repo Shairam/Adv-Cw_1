@@ -50,7 +50,7 @@ class User extends CI_Model
         }
     }
 
-    function filterUsers($genreId)
+    function filterUsers($genreId)  // Fetch users under a specific genre
     {
         $this->db->select('Users.*');
         $this->db->from('Users');
@@ -60,7 +60,7 @@ class User extends CI_Model
         return $query->result_array();
     }
 
-    function findUser($username)
+    function findUser($username)    // find if a user with the given username exists in the system
     {
         $result =  $this->db->get_where('Users', array('username' => $username));
         $row = $result->result_array();
@@ -71,32 +71,7 @@ class User extends CI_Model
         }
     }
 
-    function checkFollow($member, $loggedUser)
-    {
-        $result =  $this->db->get_where('Follows', array('followed_by' => $loggedUser, 'followed_user' => $member));
-        $row = $result->row();
-        if (isset($row)) {
-            return true;
-        }
-        return false;
-    }
-
-    function startFollowing($memberName)
-    {
-        $data = array(
-            'followed_user' => $memberName,
-            'followed_by' => $this->session->userdata('userdata')["username"]
-        );
-
-        return $this->db->insert("Follows", $data);
-    }
-    public function stopFollowing($memberName)
-    {
-        $this->db->where(array('followed_user' => $memberName, 'followed_by' => $this->session->userdata('userdata')["username"]));
-        $this->db->delete('Follows');
-    }
-
-    function testImagesView($formData)
+    function testImagesView($formData)  // Perform image URL check
     {
         if (is_array($formData)) {
             if ($formData[0] != "") {
@@ -110,7 +85,7 @@ class User extends CI_Model
             return $formData;
         } else {
             if ($formData == "" || $formData == null){
-                $formData = "https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg";
+                $formData = "https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg";   // update profile picture of a new user if URL not given
             }
             else  {
                     if (!$this->testimages($formData)) {
@@ -120,7 +95,7 @@ class User extends CI_Model
             return $formData;
          }
     }
-    function checkURL($text)
+    function checkURL($text)        // Check if a string is a valid URL
     {
         if (filter_var($text, FILTER_VALIDATE_URL)) {
             return true;
@@ -130,7 +105,7 @@ class User extends CI_Model
     }
 
 
-    function testimages($URL)
+    function testimages($URL)   // Check if the given Image URL actually returns an Image 
     {
         if (!$this->checkURL($URL)) {
             return false;
@@ -156,4 +131,46 @@ class User extends CI_Model
             return false;
         }
     }
+
+    public function getQueryFriends()       // Get list of friends (Both way follows) of current user
+    {
+        $query = $this->db->query("SELECT 
+        u.*,
+        case when b.followed_by is null then -- No record in b if current user didn't follow this user back.
+           'User is not following back'
+        else
+           'User is following back'
+        end as back
+    FROM 
+        Follows f -- IDs of followers of current user
+        INNER JOIN Users u  -- User information of those followers
+           ON u.username = f.followed_by
+        Inner JOIN Follows b  -- Check if current user follows them back.
+           ON b.followed_by = f.followed_user and
+              b.followed_user = u.username
+    WHERE
+        f.followed_user =\"" . $this->session->userdata('userdata')["username"] . "\"");
+        return $query->result_array();
+    }
+
+    function getQueryFollowings() // Get list of current user's followings
+    {
+        $this->db->select('Users.*');
+        $this->db->from('Users');
+        $this->db->join('Follows', 'Users.username = Follows.followed_user', 'inner');
+        $this->db->where('Follows.followed_by', $this->session->userdata('userdata')["username"]);
+        $query = $this->db->get_where();
+        return $query->result_array();
+    }
+
+    function getQueryFollowers()    // Get list of current user's followers
+    {
+        $this->db->select('Users.*');
+        $this->db->from('Follows');
+        $this->db->join('Users', 'Follows.followed_by = Users.username ', 'inner');
+        $this->db->where('Follows.followed_user', $this->session->userdata('userdata')["username"]);
+        $query = $this->db->get_where();
+        return $query->result_array();
+    }
+    
 }

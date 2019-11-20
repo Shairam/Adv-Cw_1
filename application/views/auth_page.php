@@ -12,12 +12,13 @@
 
 	<!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<!-- Assets/CSS -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main.css" crossorigin="anonymous">"
-	<!--Custom styles-->
-	<style>
-	
-	</style>
+
 </head>
+
+	<!-- Sign In Section -->
 <div class="container" id="con-signIn">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
@@ -60,6 +61,7 @@
 	</div>
 </div>
 
+	<!-- Sign Up Section -->
 <div class="container" id="con-signUp" style="display:none;">
 	<div class="d-flex justify-content-center h-100">
 
@@ -72,7 +74,7 @@
 				<h3>Sign Up</h3>
 			</div>
 			<div class="card-body card-signUp">
-				<form action="<?php echo site_url() ?>/authentication_controller/registerUser" method="post">
+				<form action="<?php echo site_url() ?>/authentication_controller/registerUser" method="post" id="#signUpForm">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -137,7 +139,7 @@
 								<?php
 								foreach ($genreList as $row) {
 									echo "<label>
-									<input type=\"checkbox\"  name=\"genres[]\" value=" . $row["genre_id"] . ">" . $row["name"] . "</label>";
+									<input type=\"checkbox\"  name=\"genres[]\" value=" . $row["genre_id"] . " >" . $row["name"] . "</label>";
 								}
 								?>
 
@@ -162,6 +164,8 @@
 		</div>
 	</div>
 </div>
+
+	<!-- load Jquery and custom JS file -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
 </body>
