@@ -1,31 +1,29 @@
 
-$('#signUpLink').click(function(){ onSignupClick(); return false; });
-$('#signInLink').click(function(){ onSignInclick(); return false; });
+  $('#signUpLink').click(function(){ onSignupClick(); return false; });
+  $('#signInLink').click(function(){ onSignInclick(); return false; });
 
 
-var expanded = false;
+  var expanded = false;
 
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
+  function showCheckboxes() {
+    var checkboxes = document.getElementById("checkboxes");
+    if (!expanded) {
+      checkboxes.style.display = "block";
+      expanded = true;
+    } else {
+      checkboxes.style.display = "none";
+      expanded = false;
+    }
   }
-}
+
 
 $("#signUpForm").submit(function(){
-  alert("hi");
-  console.log("Hit here");
   var checked = $("#signUpForm input:checked").length > 0;
   if (!checked){
-      alert("Please check at least one checkbox");
+      alert("Please check at least one genre");
       return false;
   }
 });
-
 
  function onSignupClick() {
          document.getElementById("con-signIn").style.display = "none";
@@ -37,6 +35,4 @@ $("#signUpForm").submit(function(){
     document.getElementById("con-signUp").style.display = "none";
     
 }
-
-
 
