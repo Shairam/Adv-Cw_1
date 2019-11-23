@@ -157,7 +157,7 @@
                             <?php // Display list of User posts
                             foreach ($allPosts as $postItem) {
                                 echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
-                                echo "<img class=\"round-img\" src=" . $postItem["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                                echo "<img class=\"round-img\" src=" . $postItem["imageURL"] . " style=\"margin:inherit\" width=\"35px\" height=\"35px\">";
                                 echo "<h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4>";
                                 echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
 
@@ -166,7 +166,7 @@
                                     foreach ($postItem["ImageLists"] as $imageLink) {
                                         echo "<img src=\" " . $imageLink . "\" class=\"postImages\">";
                                     }
-                                    echo "</div>";
+                                    echo "</div><hr/>";
                                 }
                                 echo "<h4 class=\"font-sh-1\">" . $postItem["title"] . "</h4>";
                                 echo "<p class=\"post-text\">" . replaceLinks($postItem["description"]) . "</p>";

@@ -15,6 +15,13 @@
 
     <!--Assest/css-->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/profile.css" crossorigin="anonymous">
+    <style>
+    .post-item {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
 </head>
 
 <body>
@@ -104,7 +111,7 @@
                         <?php // Display list of Logged in user's posts
                         foreach ($memberPosts as $postItem) {
                             echo " <div class=\"p-4 bg-light rounded shadow-sm post-item\">";
-                            echo "<img class=\"round-img\" src=" . $memberInfo["imageURL"] . " style=\"margin:inherit\" width=\"50px\" height=\"50px\">";
+                            echo "<img class=\"round-img\" src=" . $memberInfo["imageURL"] . " style=\"margin:inherit\" width=\"35px\" height=\"35px\">";
                             echo "<h4 class=\"headTitle\">" . $postItem["createdBy"] . "</h4>";
                             echo " <p style=\"font-size:0.8rem;\">" . $postItem["createdOn"] . "</p>";
                             if (count($postItem["ImageLists"]) > 0) {
