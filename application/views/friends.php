@@ -63,38 +63,55 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar"> <!-- Navigation Bar Section -->
-                    <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
-                    <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
-                    <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
-                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
-                        <?php echo $this->session->userdata('userdata')["username"] ?>
-                    </a>
-                </div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+                    <a class="navbar-brand font-sh-1" style="font-size: 15px;" href="<?php echo base_url() ?>index.php/">SK MusicoBook</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav ml-auto">
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a> </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>">
+                                    <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                                    <?php echo $this->session->userdata('userdata')["username"] ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
                 <!-- Profile widget -->
 
                 <div class="bg-white shadow rounded py-5 px-4">
-                    <?php 
+                    <?php
                     $followDisplayBtnTxt = "Follow";
-                     if($membersType ==  $this->config->item('membersTypes')[0]){
-                         echo "<h3 class=\"font-sh-1\"> Here are your Friends</h3>";
-                     } 
-                     if($membersType ==  $this->config->item('membersTypes')[1]){
-                         echo "<h3 class=\"font-sh-1\"> Here are your Followings</h3>";
-                     }
-                     if($membersType ==  $this->config->item('membersTypes')[2]){
-                         echo "<h3 class=\"font-sh-1\"> Here are your Followers</h3>";
-                         $followDisplayBtnTxt = "Follow Back";
-                     }
+                    if ($membersType ==  $this->config->item('membersTypes')[0]) {
+                        echo "<h3 class=\"font-sh-1\"> Here are your Friends</h3>";
+                    }
+                    if ($membersType ==  $this->config->item('membersTypes')[1]) {
+                        echo "<h3 class=\"font-sh-1\"> Here are your Followings</h3>";
+                    }
+                    if ($membersType ==  $this->config->item('membersTypes')[2]) {
+                        echo "<h3 class=\"font-sh-1\"> Here are your Followers</h3>";
+                        $followDisplayBtnTxt = "Follow Back";
+                    }
                     ?>
                     <div class="FixedHeightContainer">
                         <div class="Content" style="padding:20px">
                             <div class="card-deck">
                                 <?php //Display list of users
                                 if (!empty($friendsList)) {
-                                    
+
                                     foreach ($friendsList as $user) {
                                         if ($user["username"] == $this->session->userdata('userdata')["username"]) {
                                             continue;
@@ -155,6 +172,9 @@
         }
     </script>
     </div>
-    <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
+
 </html>

@@ -1,7 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 class Welcome extends CI_Controller //This is the main controller. Entry Point
 {
@@ -52,18 +50,19 @@ class Welcome extends CI_Controller //This is the main controller. Entry Point
 		$this->load->view("search_people", $this->arr);
 	}
 
-	public function retrieveLoadSearchData($genre_id){ 		// Controller Function to load user list in a specific genre
+	public function retrieveLoadSearchData($genre_id)
+	{ 		// Controller Function to load user list in a specific genre
 		$this->arr["userGenres"] = $this->User->filterUsers($genre_id);
-		if($this->arr["userGenres"]){
-			foreach($this->arr["userGenres"] as &$user){
+		if ($this->arr["userGenres"]) {
+			foreach ($this->arr["userGenres"] as &$user) {
 				$isFollowed = $this->Followings->checkFollow($user["username"], $this->session->userdata('userdata')["username"]);
-				$user["isFollowed"] = $isFollowed; 
+				$user["isFollowed"] = $isFollowed;
 			}
 		}
 		$this->arr["genreId"] = $genre_id;
 		$this->load->view("search_people", $this->arr);
 	}
-	
+
 	public function loadAllPosts()		//Controller Function to load home page
 	{
 		$this->load->view("home",  $this->arr);
@@ -72,10 +71,9 @@ class Welcome extends CI_Controller //This is the main controller. Entry Point
 
 	public function routeSearch()	    // Controller Function to capture genre Id in two ways (URL segment or form inputs)
 	{
-		if($this->input->get("genreId")){
+		if ($this->input->get("genreId")) {
 			$this->retrieveLoadSearchData($this->input->get("genreId"));
-		}
-		else {
+		} else {
 			$this->retrieveLoadSearchData($this->uri->segment(3));
 		}
 	}

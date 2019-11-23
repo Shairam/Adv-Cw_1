@@ -8,8 +8,6 @@ class Authentication_controller extends CI_Controller
 
 	public function __construct()
 	{
-		// placing it here should work as the parent class has added that property
-		// during it's own constructor
 		parent::__construct(); 
 		$this->load->database();
 		$this->load->model("User");
@@ -21,6 +19,7 @@ class Authentication_controller extends CI_Controller
 
 		$imageURL = $this->User->testImagesView($this->input->post("imgURL"));
 		if (!$imageURL) {
+			// Discussed with Simon
 			echo "<script>
 			alert('Invalid URL');
 			window.location.href=\"".$this->config->item('application_url')."\"
@@ -65,8 +64,9 @@ class Authentication_controller extends CI_Controller
 			);
 
 			$this->session->set_userdata('userdata', $newdata);
-			redirect($this->config->item('entry_point'));
+			redirect("welcome/");
 		} else {
+			//Discussed with Simon
 			echo "<script>
 			alert('Username or Password is wrong!!! Try again');
 			window.location.href=\"".$this->config->item('application_url')."\"

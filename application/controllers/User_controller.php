@@ -9,8 +9,6 @@ class User_controller extends CI_Controller
 	public $memberDataArr;
 	public function __construct()
 	{
-		// placing it here fails: $this has no `load` property yet.
-		// $this->load->database(); <!-- NO WAY JOSÉ!
 		parent::__construct();
 		// placing it here should work as the parent class has added that property
 		// during it's own constructor

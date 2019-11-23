@@ -21,11 +21,11 @@
             min-height: 100vh;
             margin: 0;
         }
+
         .post-item {
             width: 80%;
             margin: 0 auto;
         }
-
     </style>
 </head>
 
@@ -46,17 +46,34 @@
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar"> <!-- Nav bar section -->
-                    <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
-                    <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
-                    <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
-                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
-                        <?php echo $this->session->userdata('userdata')["username"] ?>
-                    </a>
-                </div>
-                
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+                    <a class="navbar-brand font-sh-1" style="font-size: 15px;" href="<?php echo base_url() ?>index.php/">SK MusicoBook</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav ml-auto">
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a> </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>">
+                                    <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                                    <?php echo $this->session->userdata('userdata')["username"] ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
                 <!-- Post creation Section -->
                 <div class="bg-white rounded brder">
                     <div style="height:8.5%;" class="post-item bg-white">
@@ -73,7 +90,7 @@
 
                             <div class="form-group">
                                 <label for="description">Description <span class="require">*</span></label><br />
-                                <textarea rows="4" cols="50" name="description" required></textarea>
+                                <textarea rows="4"  name="description" required></textarea>
                             </div>
 
                             <div class="form-group" id="image-div">
@@ -100,42 +117,47 @@
                     </div>
                 </div>
 
-    </div>
+            </div>
 
-    <script> // Functions below are used to update the text fields according to multiple no of post images URL
-        var counter = 1;
-        var dynamicInput = [];
+            <script>
+                // Functions below are used to update the text fields according to multiple no of post images URL
+                var counter = 1;
+                var dynamicInput = [];
 
-        function addInput() {
-            var newdiv = document.createElement('div');
-            newdiv.id = dynamicInput[counter];
-            newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myImages[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
-            document.getElementById('image-div').appendChild(newdiv);
-            counter++;
-        }
+                function addInput() {
+                    var newdiv = document.createElement('div');
+                    newdiv.id = dynamicInput[counter];
+                    newdiv.innerHTML = "Image url -  " + " <br><input type='text' name='myImages[]'> <input type='button' value='-' onClick='removeInput(" + dynamicInput[counter] + ");'>";
+                    document.getElementById('image-div').appendChild(newdiv);
+                    counter++;
+                }
 
-        function removeInput(id) {
-            var elem = document.getElementById(id);
-            return elem.parentNode.removeChild(elem);
-        }
-        window.onscroll = function() {
-            myFunction()
-        };
+                function removeInput(id) {
+                    var elem = document.getElementById(id);
+                    return elem.parentNode.removeChild(elem);
+                }
+                window.onscroll = function() {
+                    myFunction()
+                };
 
-        var navbar = document.getElementById("navbar");
-        var sticky = navbar.offsetTop;
+                var navbar = document.getElementById("navbar");
+                var sticky = navbar.offsetTop;
 
-        navbar.classList.add("sticky");
+                navbar.classList.add("sticky");
 
-        function myFunction() {
-            if (window.pageYOffset >= sticky) {
+                function myFunction() {
+                    if (window.pageYOffset >= sticky) {
 
-            } else {
-                navbar.classList.remove("sticky");
-            }
-        }
-    </script>
-    </div>
+                    } else {
+                        navbar.classList.remove("sticky");
+                    }
+                }
+            </script>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+        </div>
 </body>
 
 </html>

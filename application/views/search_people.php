@@ -58,7 +58,7 @@
 </head>
 
 <body>
-<!-- Header Section -->
+    <!-- Header Section -->
     <div class="header">
         <div class="row">
             <div class="col-lg-7 mx-auto text-blue text-center pt-5">
@@ -70,20 +70,37 @@
         </div>
     </div>
 
-<!-- Main contents Section -->
+    <!-- Main contents Section -->
     <div class="content">
         <div class="row py-5 px-4">
             <div class="col-xl-15 col-md-6 col-sm-10 mx-auto">
-                <div id="navbar"> <!-- Nav Bar Section -->
-                    <a href="<?php echo base_url() ?>index.php/welcome/">Home</a>
-                    <a href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a>
-                    <a href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
-                    <a href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser" style="float:right">Logout</a>
-                    <a href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>" style="float:right">
-                        <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
-                        <?php echo $this->session->userdata('userdata')["username"] ?>
-                    </a>
-                </div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+                    <a class="navbar-brand font-sh-1" style="font-size: 15px;" href="<?php echo base_url() ?>index.php/">SK MusicoBook</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav ml-auto">
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/welcome/displaySearch">Search</a> </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href=" <?php echo base_url() ?>index.php/welcome/loadPostView">Create Post</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/User_controller/loadMemberProfile/<?php echo $this->session->userdata('userdata')["username"] ?>">
+                                    <img class="round-img" src=<?php echo $this->session->userdata('userdata')["imageURL"] ?> width="28px" height="25px">
+                                    <?php echo $this->session->userdata('userdata')["username"] ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="<?php echo base_url() ?>index.php/authentication_controller/logoutuser">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
                 <div class="bg-white shadow rounded py-5 px-4">
                     <h5>Search For people</h5> <!-- Search Form Section -->
@@ -119,9 +136,8 @@
                                         echo "<div class=\"card\">";
                                         echo "<img class=\"card-img-top\" src=" . $user["imageURL"] . " alt=\"Card image cap\">";
                                         echo " <div class=\"card-body\">
-                                            <h5 class=\"card-title\">" . $user["username"] . "</h5>
                                             <a class=\"card-text\" href=\"" . base_url("index.php/User_controller/loadMemberProfile/$user[username]") . "\">
-                                            Show Profile
+                                            <h5 class=\"card-title\">" . $user["username"] . "</h5>
                                             </a>";
                                         if (!$user["isFollowed"]) {
                                             echo  "<a  href=\"" . base_url("index.php/User_controller/startFollowing/$genreId/$user[username]") . "\">
@@ -154,7 +170,8 @@
 
     </div>
 
-    <script> //Holds Nav bar on top
+    <script>
+        //Holds Nav bar on top
         window.onscroll = function() {
             myFunction()
         };
@@ -174,6 +191,10 @@
     </script>
     </div>
     <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

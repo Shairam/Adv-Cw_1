@@ -60,61 +60,33 @@ class Post extends CI_Model
             }
         }
         return $resultArr;
-    }   	
+    }
 
-        function findLinks($postDescription)
-        {
-            preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $postDescription, $match);
-            return $match[0];
-        }
+    function findLinks($postDescription)
+    {
+        preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $postDescription, $match);
+        return $match[0];
+    }
 
-        function testImagesView(&$postItem)  // Perform image URL check
-        {
-            $postItem["ImageLists"] = array();
-            $linksArr = $this->findLinks($postItem["description"]);
+    function testImagesView(&$postItem)  // Perform image URL check
+    {
+        $postItem["ImageLists"] = array();
+        $linksArr = $this->findLinks($postItem["description"]);
 
-            if(isset($linksArr))
-            foreach ($linksArr as $imageLink){
-            if ($this->testimages($imageLink)) {
-                array_push($postItem["ImageLists"],$imageLink);
+        if (isset($linksArr))
+            foreach ($linksArr as $imageLink) {
+                if ($this->checkImagesURL($imageLink)) {
+                    array_push($postItem["ImageLists"], $imageLink);
+                }
             }
-        }
-        
-        }
-        function checkURL($text)        // Check if a string is a valid URL
-        {
-            if (filter_var($text, FILTER_VALIDATE_URL)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+    }
 
-
-	function testimages($URL)   // Check if the given Image URL actually returns an Image 
+    function checkImagesURL($url)
 	{
-		if (!$this->checkURL($URL)) {
-			return false;
-		}
-
-		$urlHeaders = get_headers($URL, 1);
-
-		if (count($urlHeaders['Content-Type']) != 1) {
-			return false;
-		}
-
-		$type = strtolower($urlHeaders['Content-Type']);
-
-		$valid_image_type = array();
-		$valid_image_type['image/png'] = '';
-		$valid_image_type['image/jpg'] = '';
-		$valid_image_type['image/jpeg'] = '';
-		$valid_image_type['image/jpe'] = '';
-
-		if (isset($valid_image_type[$type])) {
+		$imgExts = array("gif", "jpg", "jpeg", "png", "tiff", "tif");
+		$urlExt = pathinfo($url, PATHINFO_EXTENSION);
+		if (in_array($urlExt, $imgExts)) {
 			return true;
-		} else {
-			return false;
 		}
 	}
 }
