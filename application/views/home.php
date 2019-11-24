@@ -92,11 +92,6 @@
 
                     <div class="bg-light p-4 d-flex justify-content-end text-center">
                         <ul class="list-inline mb-0">
-                            <a href="#postsView">
-                                <li class="list-inline-item">
-                                    <h5 class="font-weight-bold mb-0 d-block"><?php echo count($memberPosts); ?></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
-                                </li>
-                            </a>
                             <li class="list-inline-item">
                                 <a href="<?php echo base_url() ?>index.php/User_controller/getFollowers">
                                     <h5 class="font-weight-bold mb-0 d-block"><?php echo $memberFollowDetails["Followers"]; ?></h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Followers</small>
@@ -164,7 +159,7 @@
                                 if (count($postItem["ImageLists"]) > 0) {
                                     echo " <div id=\"slide\">";
                                     foreach ($postItem["ImageLists"] as $imageLink) {
-                                        echo "<img src=\" " . $imageLink . "\" class=\"postImages\">";
+                                        echo "<a href=\"". $imageLink ."\"><img src=\" " . $imageLink . "\" class=\"postImages\"></a>";
                                     }
                                     echo "</div><hr/>";
                                 }

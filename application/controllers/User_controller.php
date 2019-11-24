@@ -49,9 +49,9 @@ class User_controller extends CI_Controller
 		$genreId = $this->uri->segment(3);
 		$memberName = $this->uri->segment(4);
 		$added = $this->Followings->startFollowing($memberName);
-		if($genreId != 0){
+		if ($genreId != 0) {
 			redirect("welcome/routeSearch/$genreId");
-		} else{
+		} else {
 			redirect("welcome/");
 		}
 	}
@@ -61,11 +61,11 @@ class User_controller extends CI_Controller
 		$genreId = $this->uri->segment(3);
 		$memberName = $this->uri->segment(4);
 		$removed = $this->Followings->stopFollowing($memberName);
-		if($genreId != 0){
+		if ($genreId != 0) {
 			redirect("welcome/routeSearch/$genreId");
-		} else{
+		} else {
 			redirect("welcome/");
-		}	
+		}
 	}
 
 	public function getFriends() // load friends list of the logged in user
@@ -92,11 +92,12 @@ class User_controller extends CI_Controller
 		$this->load->view("friends", $this->memberDataArr);
 	}
 
-	public function performFollowCheck(&$membersList){ // Controller function to check if the currently logged in user follows members in a list
-		if($membersList){
-			foreach($membersList as &$user){
+	public function performFollowCheck(&$membersList)
+	{ // Controller function to check if the currently logged in user follows members in a list
+		if ($membersList) {
+			foreach ($membersList as &$user) {
 				$isFollowed = $this->Followings->checkFollow($user["username"], $this->session->userdata('userdata')["username"]);
-				$user["isFollowed"] = $isFollowed; 
+				$user["isFollowed"] = $isFollowed;
 			}
 		}
 	}

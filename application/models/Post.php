@@ -62,13 +62,13 @@ class Post extends CI_Model
         return $resultArr;
     }
 
-    function findLinks($postDescription)
+    public function findLinks($postDescription)
     {
         preg_match_all('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', $postDescription, $match);
         return $match[0];
     }
 
-    function testImagesView(&$postItem)  // Perform image URL check
+    public function testImagesView(&$postItem)  // Perform image URL check
     {
         $postItem["ImageLists"] = array();
         $linksArr = $this->findLinks($postItem["description"]);
@@ -81,12 +81,25 @@ class Post extends CI_Model
             }
     }
 
-    function checkImagesURL($url)
+   public function checkImagesURL($url)
 	{
 		$imgExts = array("gif", "jpg", "jpeg", "png", "tiff", "tif");
 		$urlExt = pathinfo($url, PATHINFO_EXTENSION);
 		if (in_array($urlExt, $imgExts)) {
 			return true;
 		}
-	}
+    }
+    
+    public function checkProfileImage($url){
+
+            if ($url == "" || $url == null) {
+                $url = "https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg";   // update profile picture of a new user if URL not given
+            } else {
+                if (!$this->checkImagesURL($url)) {
+                    return null;
+                }
+            }
+            return $url;
+        }
+
 }

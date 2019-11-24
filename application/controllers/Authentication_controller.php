@@ -11,17 +11,18 @@ class Authentication_controller extends CI_Controller
 		parent::__construct(); 
 		$this->load->database();
 		$this->load->model("User");
+		$this->load->model("Post");
 		$this->load->model("Genre");
 	}
 
 	public function registerUser() // Controller function to register a New user
 	{
 
-		$imageURL = $this->User->testImagesView($this->input->post("imgURL"));
+		$imageURL = $this->Post->checkProfileImage($this->input->post("imgURL"));
 		if (!$imageURL) {
 			// Discussed with Simon
 			echo "<script>
-			alert('Invalid URL');
+			alert('Invalid Image URL given for profile picture');
 			window.location.href=\"".$this->config->item('application_url')."\"
 				</script>";
 				return;
@@ -44,7 +45,10 @@ class Authentication_controller extends CI_Controller
 			window.location.href=\"".$this->config->item('application_url')."\"
 				</script>";
 		} else {
-			redirect($this->config->item('entry_point'));
+			echo "<script>
+			alert('User created successfully');
+			window.location.href=\"".$this->config->item('application_url')."\"
+				</script>";
 		}
 	}
 

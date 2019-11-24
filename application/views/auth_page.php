@@ -15,6 +15,15 @@
 
 	<!-- Assets/CSS -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main.css" crossorigin="anonymous">"
+	<style>
+	 body {
+        background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: 'Numans', sans-serif;
+    }
+	</style>
 
 </head>
 
@@ -120,7 +129,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" name="imgURL" placeholder="Image URL">
+						<input type="text" class="form-control" name="imgURL" placeholder="Profile Image URL">
 
 					</div>
 					<!-- Input radio cheeck for getting the favourite music genres -->

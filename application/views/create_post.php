@@ -93,17 +93,6 @@
                                 <textarea rows="4"  name="description" required></textarea>
                             </div>
 
-                            <div class="form-group" id="image-div">
-                                <div id="dynamicInput[0]">
-                                    Upload images here (urls:- )<br><input type="text" name="myImages[]">
-                                    <input type="button" value="+" onClick="addInput();">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <p><span class="require">*</span> - required fields</p>
-                            </div>
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
                                     Create

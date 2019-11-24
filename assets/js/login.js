@@ -25,6 +25,16 @@ $("#signUpForm").submit(function(){
   }
 });
 
+
+$("#updateForm").submit(function(){
+  var checked = $("#updateForm input:checked").length > 0;
+  if (!checked){
+      alert("Please check at least one genre");
+      return false;
+  }
+});
+
+
  function onSignupClick() {
          document.getElementById("con-signIn").style.display = "none";
      document.getElementById("con-signUp").style.display = "block";

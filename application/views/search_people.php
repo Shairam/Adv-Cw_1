@@ -24,13 +24,14 @@
         .FixedHeightContainer {
 
             height: 45600px0px;
-            width: 800px;
+            width: 100%;
             padding: 3px;
 
         }
 
         .Content {
             height: 600px;
+            width: 100%;
             overflow: auto;
             background: #fff;
         }

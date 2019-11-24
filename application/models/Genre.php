@@ -30,11 +30,12 @@ class Genre extends CI_Model
     }
 
     public function loadUserGenres($username)   // Model function to fetch list of genres a user is interested in
-    {   $dataArr =array();
+    {
+        $dataArr = array();
         if ($this->session->userdata('userdata')) {
             $query = $this->db->get_where('Genre_Bridge', array('username' => $username));
-            foreach ($query->result_array() as $item){
-                    $dataArr[] = $item["genre_id"];
+            foreach ($query->result_array() as $item) {
+                $dataArr[] = $item["genre_id"];
             }
             return $dataArr;
         } else {
@@ -43,15 +44,27 @@ class Genre extends CI_Model
     }
 
     public function getUserGenres($username)        // Model function to convert the fetched list from the above method to string and return to caller.
-	{
+    {
         $strGenre = [];
         $genreLists = $this->loadGenres();
-		foreach ($genreLists as $genreItem) {
-			$memberGenre =  $this->loadUserGenres($username);
-			if (in_array($genreItem["genre_id"],$memberGenre)) {
-				$strGenre[] = $genreItem["name"];
-			}
-		}
-		return implode(', ', $strGenre);
-	}
+        foreach ($genreLists as $genreItem) {
+            $memberGenre =  $this->loadUserGenres($username);
+            if (in_array($genreItem["genre_id"], $memberGenre)) {
+                $strGenre[] = $genreItem["name"];
+            }
+        }
+        return implode(', ', $strGenre);
+    }
+
+    public function reupdateGenre($genrelist, $username)      // Model function to update database with the selected genre by the user
+    {
+        foreach ($genrelist as $id) {
+            $data = array(
+                'username' => $username,
+                'genre_id' => $id
+            );
+            $this->db->where('username', $username);
+            $this->db->update('Genre_Bridge', $data);
+        }
+    }
 }

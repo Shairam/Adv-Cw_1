@@ -84,16 +84,15 @@ class User extends CI_Model
             }
             return $formData;
         } else {
-            if ($formData == "" || $formData == null){
+            if ($formData == "" || $formData == null) {
                 $formData = "https://avatarsed1.serversdev.getgo.com/2205256774854474505_medium.jpg";   // update profile picture of a new user if URL not given
-            }
-            else  {
-                    if (!$this->testimages($formData)) {
-                        return null;
-                    }
+            } else {
+                if (!$this->testimages($formData)) {
+                    return null;
+                }
             }
             return $formData;
-         }
+        }
     }
     function checkURL($text)        // Check if a string is a valid URL
     {
